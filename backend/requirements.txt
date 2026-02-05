@@ -1,0 +1,15 @@
+# SIUE Campus Routing Backend
+# Core framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+
+# CORS for frontend communication
+python-multipart==0.0.6
+
+# Algorithm visualization
+networkx==3.2.1
+numpy==1.26.3
+
+# Utilities
+python-dotenv==1.0.0
