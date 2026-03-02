@@ -1,0 +1,707 @@
+{
+  "metadata": {
+    "last_updated": "2026-03-02",
+    "academic_year": "2025-2026",
+    "notes": "Realistic building hours for all 57 SIUE buildings. Hours represent typical academic-year schedules."
+  },
+  "building_hours": [
+    {
+      "building_id": "lovejoy_library",
+      "building_name": "Lovejoy Library",
+      "weekday": {"open": "07:00", "close": "23:00"},
+      "friday": {"open": "07:00", "close": "21:00"},
+      "saturday": {"open": "10:00", "close": "18:00"},
+      "sunday": {"open": "12:00", "close": "23:00"},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "08:00", "close": "17:00"}, "saturday": {"open": "10:00", "close": "14:00"}, "sunday": null},
+      "indoor_shortcuts_available": true,
+      "allows_through_traffic": true,
+      "notes": "Can walk through main lobby between stacks during open hours"
+    },
+    {
+      "building_id": "morris_university_center",
+      "building_name": "Morris University Center",
+      "weekday": {"open": "06:00", "close": "24:00"},
+      "friday": {"open": "06:00", "close": "23:00"},
+      "saturday": {"open": "08:00", "close": "22:00"},
+      "sunday": {"open": "10:00", "close": "21:00"},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "19:00"}, "saturday": {"open": "09:00", "close": "17:00"}, "sunday": null},
+      "indoor_shortcuts_available": true,
+      "allows_through_traffic": true,
+      "notes": "Central hub; indoor shortcut between east and west campus walkways. Food court closes 20:00 weekdays."
+    },
+    {
+      "building_id": "engineering_building",
+      "building_name": "Engineering Building",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "17:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "18:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Keycard access for labs after 18:00 weekdays. Closed Sunday during academic year."
+    },
+    {
+      "building_id": "peck_hall",
+      "building_name": "Peck Hall",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "17:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "17:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": true,
+      "allows_through_traffic": true,
+      "notes": "Large multi-wing building; can cut through lobby corridor between wings during open hours."
+    },
+    {
+      "building_id": "science_east_building",
+      "building_name": "Science East Building",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "16:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "18:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Lab access restricted; lobby only for through traffic."
+    },
+    {
+      "building_id": "science_west_building",
+      "building_name": "Science West Building",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "16:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "18:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Connected to Science East; same access restrictions."
+    },
+    {
+      "building_id": "dunham_hall",
+      "building_name": "Dunham Hall",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "21:00"},
+      "saturday": {"open": "08:00", "close": "17:00"},
+      "sunday": {"open": "12:00", "close": "18:00"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Music and arts building; weekend hours for practice rooms."
+    },
+    {
+      "building_id": "rendleman_hall",
+      "building_name": "Rendleman Hall",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "19:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "08:00", "close": "17:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Administration and classrooms."
+    },
+    {
+      "building_id": "alumni_hall",
+      "building_name": "Alumni Hall",
+      "weekday": {"open": "08:00", "close": "20:00"},
+      "friday": {"open": "08:00", "close": "17:00"},
+      "saturday": {"open": null, "close": null},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Primarily event and alumni relations use."
+    },
+    {
+      "building_id": "founders_hall",
+      "building_name": "Founders Hall",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "08:00", "close": "17:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Original campus administration building."
+    },
+    {
+      "building_id": "b_barnard_birger_hall",
+      "building_name": "B. Barnard Birger Hall",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "17:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Business school building."
+    },
+    {
+      "building_id": "bluff_residence_hall",
+      "building_name": "Bluff Residence Hall",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "24/7 resident card access only. No public through traffic."
+    },
+    {
+      "building_id": "prairie_residence_hall",
+      "building_name": "Prairie Residence Hall",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "24/7 resident card access only."
+    },
+    {
+      "building_id": "woodland_residence_hall",
+      "building_name": "Woodland Residence Hall",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "24/7 resident card access only."
+    },
+    {
+      "building_id": "evergreen_residence_hall",
+      "building_name": "Evergreen Residence Hall",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "24/7 resident card access only."
+    },
+    {
+      "building_id": "vadalabene_center",
+      "building_name": "Vadalabene Center",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "20:00"},
+      "sunday": {"open": "12:00", "close": "20:00"},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "06:00", "close": "20:00"}, "saturday": {"open": "09:00", "close": "17:00"}, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Athletic facility. Event days may have extended or restricted access."
+    },
+    {
+      "building_id": "student_fitness_center",
+      "building_name": "Student Fitness Center",
+      "weekday": {"open": "05:30", "close": "23:00"},
+      "friday": {"open": "05:30", "close": "21:00"},
+      "saturday": {"open": "07:00", "close": "21:00"},
+      "sunday": {"open": "09:00", "close": "21:00"},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "06:00", "close": "20:00"}, "saturday": {"open": "08:00", "close": "18:00"}, "sunday": {"open": "10:00", "close": "18:00"}},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Earliest opening on campus. Student ID required."
+    },
+    {
+      "building_id": "siue_recplex",
+      "building_name": "SIUE Recplex",
+      "weekday": {"open": "06:00", "close": "22:00"},
+      "friday": {"open": "06:00", "close": "20:00"},
+      "saturday": {"open": "08:00", "close": "18:00"},
+      "sunday": {"open": "12:00", "close": "18:00"},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:00", "close": "19:00"}, "saturday": {"open": "09:00", "close": "15:00"}, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Recreation and intramural facility."
+    },
+    {
+      "building_id": "tennis_courts",
+      "building_name": "Tennis Courts",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "21:00"},
+      "saturday": {"open": "08:00", "close": "20:00"},
+      "sunday": {"open": "10:00", "close": "18:00"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": true,
+      "notes": "Outdoor facility; lighted for evening play. Reservation required for court use."
+    },
+    {
+      "building_id": "early_childhood_center",
+      "building_name": "Early Childhood Center",
+      "weekday": {"open": "07:00", "close": "18:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": null, "close": null},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "07:30", "close": "17:30"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Child care facility; restricted to enrolled families and staff."
+    },
+    {
+      "building_id": "100_north_research_drive",
+      "building_name": "100 North Research Drive",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Research park tenant building."
+    },
+    {
+      "building_id": "110_north_research_drive",
+      "building_name": "110 North Research Drive",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Research park tenant building."
+    },
+    {
+      "building_id": "47_north_research_drive",
+      "building_name": "47 North Research Drive",
+      "weekday": {"open": "08:00", "close": "18:00"},
+      "friday": {"open": "08:00", "close": "17:00"},
+      "saturday": {"open": null, "close": null},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Smaller research facility."
+    },
+    {
+      "building_id": "95_north_research_drive",
+      "building_name": "95 North Research Drive",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Research park building."
+    },
+    {
+      "building_id": "200_university_park",
+      "building_name": "200 University Park",
+      "weekday": {"open": "08:00", "close": "18:00"},
+      "friday": {"open": "08:00", "close": "17:00"},
+      "saturday": {"open": null, "close": null},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "University park office building."
+    },
+    {
+      "building_id": "school_of_pharmacy_lab",
+      "building_name": "School of Pharmacy Lab",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "08:00", "close": "17:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Lab access requires pharmacy student/faculty ID after hours."
+    },
+    {
+      "building_id": "technology_and_management_center",
+      "building_name": "Technology and Management Center",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "15:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Research and technology facility."
+    },
+    {
+      "building_id": "metcalf_student_experimental_theater",
+      "building_name": "Metcalf Student Experimental Theater",
+      "weekday": {"open": "09:00", "close": "22:00"},
+      "friday": {"open": "09:00", "close": "23:00"},
+      "saturday": {"open": "12:00", "close": "23:00"},
+      "sunday": {"open": "12:00", "close": "20:00"},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "10:00", "close": "18:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Hours vary with performance schedule. Check theater calendar."
+    },
+    {
+      "building_id": "physics_observatory",
+      "building_name": "Physics Observatory",
+      "weekday": {"open": "20:00", "close": "23:00"},
+      "friday": {"open": "20:00", "close": "23:00"},
+      "saturday": {"open": "20:00", "close": "23:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "21:00", "close": "24:00"}, "saturday": {"open": "21:00", "close": "24:00"}, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Evening observation sessions only. Closed during daylight. Remote location."
+    },
+    {
+      "building_id": "siue_greenhouse",
+      "building_name": "SIUE Greenhouse",
+      "weekday": {"open": "08:00", "close": "17:00"},
+      "friday": {"open": "08:00", "close": "16:00"},
+      "saturday": {"open": null, "close": null},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Closed weekends. Access restricted to horticulture students and faculty."
+    },
+    {
+      "building_id": "art_and_design",
+      "building_name": "Art and Design",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "18:00"},
+      "saturday": {"open": "09:00", "close": "17:00"},
+      "sunday": {"open": null, "close": null},
+      "summer_hours_differ": true,
+      "summer_hours": {"weekday": {"open": "08:00", "close": "17:00"}, "saturday": null, "sunday": null},
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": false,
+      "notes": "Studio access may require faculty approval outside class hours."
+    },
+    {
+      "building_id": "buckminster_fuller_dome",
+      "building_name": "Buckminster Fuller Dome",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": true,
+      "notes": "Outdoor landmark; accessible 24/7."
+    },
+    {
+      "building_id": "stratton_quadrangle",
+      "building_name": "Stratton Quadrangle",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": true,
+      "notes": "Central outdoor quadrangle; open 24/7."
+    },
+    {
+      "building_id": "the_e_sculpture",
+      "building_name": "The 'e' Sculpture",
+      "weekday": {"open": "00:00", "close": "23:59"},
+      "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"},
+      "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": true,
+      "notes": "Outdoor sculpture; 24/7."
+    },
+    {
+      "building_id": "the_gardens",
+      "building_name": "The Gardens",
+      "weekday": {"open": "07:00", "close": "21:00"},
+      "friday": {"open": "07:00", "close": "21:00"},
+      "saturday": {"open": "07:00", "close": "21:00"},
+      "sunday": {"open": "07:00", "close": "21:00"},
+      "summer_hours_differ": false,
+      "summer_hours": null,
+      "indoor_shortcuts_available": false,
+      "allows_through_traffic": true,
+      "notes": "Remote outdoor garden area near Physics Observatory."
+    },
+    {
+      "building_id": "parking_lot_a", "building_name": "Parking Lot A",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_b", "building_name": "Parking Lot B",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_bh", "building_name": "Parking Lot BH",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_c", "building_name": "Parking Lot C",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_d", "building_name": "Parking Lot D",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_e", "building_name": "Parking Lot E",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_eh", "building_name": "Parking Lot EH",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_f", "building_name": "Parking Lot F",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_g", "building_name": "Parking Lot G",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_wh", "building_name": "Parking Lot WH",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 surface lot."
+    },
+    {
+      "building_id": "parking_lot_p1", "building_name": "Parking Lot P1",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p2", "building_name": "Parking Lot P2",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p3", "building_name": "Parking Lot P3",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p4", "building_name": "Parking Lot P4",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p5", "building_name": "Parking Lot P5",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p6", "building_name": "Parking Lot P6",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p7", "building_name": "Parking Lot P7",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p8", "building_name": "Parking Lot P8",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p9", "building_name": "Parking Lot P9",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 east campus lot."
+    },
+    {
+      "building_id": "parking_lot_p10", "building_name": "Parking Lot P10",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 north campus lot."
+    },
+    {
+      "building_id": "parking_lot_p11", "building_name": "Parking Lot P11",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 north campus lot."
+    },
+    {
+      "building_id": "parking_lot_p12", "building_name": "Parking Lot P12",
+      "weekday": {"open": "00:00", "close": "23:59"}, "friday": {"open": "00:00", "close": "23:59"},
+      "saturday": {"open": "00:00", "close": "23:59"}, "sunday": {"open": "00:00", "close": "23:59"},
+      "summer_hours_differ": false, "summer_hours": null,
+      "indoor_shortcuts_available": false, "allows_through_traffic": true, "notes": "24/7 north campus lot."
+    }
+  ],
+  "class_schedule": {
+    "standard_class_start_times": ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"],
+    "class_duration_minutes": [50, 75, 110, 170],
+    "transition_time_minutes": 10,
+    "notes": "10-minute passing period between classes"
+  },
+  "rush_hours": [
+    {
+      "id": "morning_arrival",
+      "start_time": "07:50", "end_time": "08:10",
+      "intensity": "high", "crowd_multiplier": 1.4,
+      "affected_buildings": ["morris_university_center","peck_hall","rendleman_hall","dunham_hall","lovejoy_library","engineering_building","science_east_building","science_west_building"]
+    },
+    {
+      "id": "first_class_wave",
+      "start_time": "08:50", "end_time": "09:10",
+      "intensity": "high", "crowd_multiplier": 1.5,
+      "affected_buildings": ["peck_hall","rendleman_hall","engineering_building","science_east_building","science_west_building","b_barnard_birger_hall","alumni_hall","founders_hall"]
+    },
+    {
+      "id": "peak_transition_1",
+      "start_time": "09:50", "end_time": "10:10",
+      "intensity": "very_high", "crowd_multiplier": 1.7,
+      "affected_buildings": ["peck_hall","rendleman_hall","engineering_building","science_east_building","science_west_building","dunham_hall","lovejoy_library","morris_university_center","stratton_quadrangle","the_e_sculpture"]
+    },
+    {
+      "id": "peak_transition_2",
+      "start_time": "10:50", "end_time": "11:10",
+      "intensity": "very_high", "crowd_multiplier": 1.7,
+      "affected_buildings": ["peck_hall","rendleman_hall","engineering_building","science_east_building","science_west_building","dunham_hall","lovejoy_library","morris_university_center","stratton_quadrangle"]
+    },
+    {
+      "id": "lunch_rush",
+      "start_time": "11:30", "end_time": "13:00",
+      "intensity": "high", "crowd_multiplier": 1.8,
+      "affected_buildings": ["morris_university_center","lovejoy_library","stratton_quadrangle","peck_hall","student_fitness_center"]
+    },
+    {
+      "id": "post_lunch",
+      "start_time": "12:50", "end_time": "13:10",
+      "intensity": "medium", "crowd_multiplier": 1.3,
+      "affected_buildings": ["peck_hall","rendleman_hall","engineering_building","science_east_building","b_barnard_birger_hall"]
+    },
+    {
+      "id": "afternoon_transition",
+      "start_time": "13:50", "end_time": "14:10",
+      "intensity": "medium", "crowd_multiplier": 1.3,
+      "affected_buildings": ["peck_hall","engineering_building","science_east_building","science_west_building","b_barnard_birger_hall"]
+    },
+    {
+      "id": "late_afternoon",
+      "start_time": "14:50", "end_time": "15:10",
+      "intensity": "medium", "crowd_multiplier": 1.2,
+      "affected_buildings": ["peck_hall","engineering_building","science_east_building"]
+    },
+    {
+      "id": "end_of_day",
+      "start_time": "15:50", "end_time": "16:10",
+      "intensity": "high", "crowd_multiplier": 1.5,
+      "affected_buildings": ["peck_hall","rendleman_hall","engineering_building","science_east_building","science_west_building","b_barnard_birger_hall","alumni_hall","parking_lot_a","parking_lot_b","parking_lot_c","parking_lot_g"]
+    }
+  ],
+  "high_traffic_buildings": {
+    "morris_university_center": {
+      "building_id": "morris_university_center",
+      "peak_hours": ["07:50-08:10","11:30-13:00"],
+      "reason": "Central hub and food court — busiest single point on campus"
+    },
+    "peck_hall": {
+      "building_id": "peck_hall",
+      "peak_hours": ["09:00-11:00","13:00-15:00"],
+      "reason": "Largest lecture hall complex; 3 large auditoriums"
+    },
+    "engineering_building": {
+      "building_id": "engineering_building",
+      "peak_hours": ["09:00-11:00","14:00-16:00"],
+      "reason": "Engineering classes concentrated; limited alternative routes"
+    },
+    "science_east_building": {
+      "building_id": "science_east_building",
+      "peak_hours": ["09:00-12:00"],
+      "reason": "Lab classes create sustained foot traffic"
+    },
+    "lovejoy_library": {
+      "building_id": "lovejoy_library",
+      "peak_hours": ["10:00-12:00","19:00-21:00"],
+      "reason": "Study sessions; significant shortcut route through campus"
+    }
+  }
+}

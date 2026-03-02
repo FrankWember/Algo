@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { MapPin, Building2, Home, Car, Dumbbell } from 'lucide-react';
+import { MapPin, Building2, Home, Car, Dumbbell, FlaskConical } from 'lucide-react';
 import type { Node } from '@/types';
 
 interface BuildingSelectorProps {
@@ -32,16 +32,18 @@ interface LocationInputProps {
 const TYPE_ICONS: Record<string, React.ReactNode> = {
   academic: <Building2 size={14} />,
   residential: <Home size={14} />,
+  recreation: <Dumbbell size={14} />,
   parking: <Car size={14} />,
-  athletic: <Dumbbell size={14} />,
+  research: <FlaskConical size={14} />,
   other: <MapPin size={14} />,
 };
 
 const TYPE_LABELS: Record<string, string> = {
-  academic: 'Academic',
+  academic: 'Academic & Student Services',
   residential: 'Residential',
+  recreation: 'Recreation & Athletics',
   parking: 'Parking',
-  athletic: 'Athletic',
+  research: 'Research',
   other: 'Other',
 };
 
@@ -96,7 +98,7 @@ function NodeGroup({
       <div className="px-3 py-1 bg-gray-50 text-xs font-medium text-gray-500 sticky top-0">
         {TYPE_LABELS[type]}
       </div>
-      {nodes.slice(0, 10).map(node => (
+      {nodes.map(node => (
         <NodeItem key={node.id} node={node} onSelect={onSelect} />
       ))}
     </div>

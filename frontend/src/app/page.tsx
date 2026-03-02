@@ -9,8 +9,19 @@ import AlgorithmSelector from '@/components/AlgorithmSelector';
 import BuildingSelector from '@/components/BuildingSelector';
 import ResultsPanel from '@/components/ResultsPanel';
 import StepVisualizer from '@/components/StepVisualizer';
+import PreferencesPanel from '@/components/PreferencesPanel';
 import { api } from '@/lib/api';
-import type { Node, Edge, PathResponse, ComparisonResponse, AlgorithmType, AlgorithmStep } from '@/types';
+import type {
+  Node, Edge, PathResponse, ComparisonResponse, AlgorithmType, AlgorithmStep,
+  AccessibilityInfo, RoutePreferences
+} from '@/types';
+
+const DEFAULT_PREFERENCES: RoutePreferences = {
+  wheelchair_only: false,
+  avoid_stairs: false,
+  max_stairs: 999,
+  departure_time: '',
+};
 
 export default function Home() {
   // Graph data state
@@ -35,17 +46,28 @@ export default function Home() {
   const [currentNode, setCurrentNode] = useState<string | null>(null);
   const [currentSteps, setCurrentSteps] = useState<AlgorithmStep[]>([]);
 
+  // Preferences state
+  const [preferences, setPreferences] = useState<RoutePreferences>(DEFAULT_PREFERENCES);
+  const [accessibilityData, setAccessibilityData] = useState<Record<string, AccessibilityInfo>>({});
+
   // UI state
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
 
-  // Load graph data on mount
+  // Load graph + accessibility data on mount
   useEffect(() => {
     const loadGraph = async () => {
       try {
         setIsLoading(true);
-        const data = await api.getGraph();
-        setNodes(data.nodes);
-        setEdges(data.edges);
+        const [graphData, accessData] = await Promise.all([
+          api.getGraph(),
+          api.getAccessibility().catch(() => ({ buildings: [], total: 0, standards: {} })),
+        ]);
+        setNodes(graphData.nodes);
+        setEdges(graphData.edges);
+        // Index accessibility by building_id for O(1) lookup
+        const indexed: Record<string, AccessibilityInfo> = {};
+        for (const b of accessData.buildings) indexed[b.building_id] = b;
+        setAccessibilityData(indexed);
         setError(null);
       } catch (err) {
         setError('Failed to load campus data. Make sure the backend is running.');
@@ -92,9 +114,13 @@ export default function Home() {
     setCurrentNode(null);
     setCurrentSteps([]);
 
+    // Only send preferences if any are active
+    const prefsActive = preferences.wheelchair_only || preferences.avoid_stairs || !!preferences.departure_time;
+    const prefsPayload = prefsActive ? preferences : undefined;
+
     try {
       if (selectedAlgorithm === 'compare') {
-        const compResult = await api.compareAlgorithms(selectedStart, selectedEnd);
+        const compResult = await api.compareAlgorithms(selectedStart, selectedEnd, prefsPayload);
         setComparison(compResult);
 
         // Show the winner's path
@@ -104,7 +130,7 @@ export default function Home() {
           setCurrentSteps(winner.steps);
         }
       } else {
-        const pathResult = await api.findPath(selectedStart, selectedEnd, selectedAlgorithm);
+        const pathResult = await api.findPath(selectedStart, selectedEnd, selectedAlgorithm, prefsPayload);
         setResult(pathResult);
         setCurrentPath(pathResult.path);
         setCurrentSteps(pathResult.steps);
@@ -115,7 +141,7 @@ export default function Home() {
     } finally {
       setIsCalculating(false);
     }
-  }, [selectedStart, selectedEnd, selectedAlgorithm]);
+  }, [selectedStart, selectedEnd, selectedAlgorithm, preferences]);
 
   // Handle step changes from visualizer
   const handleStepChange = useCallback((step: AlgorithmStep | null) => {
@@ -266,6 +292,19 @@ export default function Home() {
                   </button>
                 </motion.div>
 
+                {/* Preferences Panel */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-4"
+                >
+                  <PreferencesPanel
+                    preferences={preferences}
+                    onChange={setPreferences}
+                  />
+                </motion.div>
+
                 {/* Step Visualizer */}
                 {currentSteps.length > 0 && (
                   <motion.div
@@ -331,6 +370,8 @@ export default function Home() {
                     result={result}
                     comparison={comparison}
                     isLoading={isCalculating}
+                    accessibilityData={accessibilityData}
+                    preferences={preferences}
                   />
                 </div>
               </div>

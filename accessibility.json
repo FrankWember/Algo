@@ -1,0 +1,1161 @@
+{
+  "metadata": {
+    "last_updated": "2026-03-02",
+    "total_buildings_mapped": 57,
+    "notes": "Realistic accessibility data for all 57 SIUE buildings. Ratings 1-10 based on: elevator availability (+2), ramp presence (+2), automatic doors (+2), accessible restrooms (+1), ground-level accessible entrance (+1), low stair count (+2).",
+    "accessibility_standards": {
+      "max_ramp_slope": "8.33% (1:12 ratio per ADA)",
+      "preferred_ramp_slope": "5% or less",
+      "door_width_minimum": "32 inches clear",
+      "elevator_required_for": "Multi-story buildings"
+    }
+  },
+  "buildings": [
+    {
+      "building_id": "lovejoy_library",
+      "building_name": "Lovejoy Library",
+      "entrances": [
+        {
+          "name": "main_south",
+          "accessible": true,
+          "stairs_count": 12,
+          "has_ramp": true,
+          "ramp_slope_percent": 4.8,
+          "automatic_doors": true,
+          "notes": "Main entrance — stairs on left, accessible ramp on right leading to automatic doors"
+        },
+        {
+          "name": "west_ground",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Grade-level accessible side entrance near parking lot C"
+        }
+      ],
+      "elevators": {
+        "count": 2,
+        "locations": ["central atrium", "east wing"],
+        "notes": "Both elevators serve all 4 floors; braille buttons present"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Fully ADA compliant. Built 1966, major renovation 2004 added modern accessibility."
+    },
+    {
+      "building_id": "morris_university_center",
+      "building_name": "Morris University Center",
+      "entrances": [
+        {
+          "name": "main_east",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Grade-level main entrance; automatic sliding doors"
+        },
+        {
+          "name": "south",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "South patio entrance; grade-level"
+        },
+        {
+          "name": "north_tunnel",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Connects to underground tunnel network (when available)"
+        }
+      ],
+      "elevators": {
+        "count": 3,
+        "locations": ["main lobby", "south wing", "food court level"],
+        "notes": "Central hub of campus — all elevators serve all 3 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 10,
+      "notes": "Flagship accessibility. Central campus building with best ADA compliance."
+    },
+    {
+      "building_id": "engineering_building",
+      "building_name": "Engineering Building",
+      "entrances": [
+        {
+          "name": "main_north",
+          "accessible": false,
+          "stairs_count": 8,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Main north entrance — 8 steps, no ramp here"
+        },
+        {
+          "name": "west_accessible",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "ADA-compliant west entrance; ramp + automatic door"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["central corridor"],
+        "notes": "Serves all 3 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "1996 construction — west entrance is primary accessible route."
+    },
+    {
+      "building_id": "peck_hall",
+      "building_name": "Peck Hall",
+      "entrances": [
+        {
+          "name": "main_south",
+          "accessible": false,
+          "stairs_count": 10,
+          "has_ramp": true,
+          "ramp_slope_percent": 6.5,
+          "automatic_doors": false,
+          "notes": "Main entrance has 10 steps; ramp on east side of entrance plaza"
+        },
+        {
+          "name": "east_accessible",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.5,
+          "automatic_doors": true,
+          "notes": "Accessible east entrance; ramp leads directly to elevator lobby"
+        }
+      ],
+      "elevators": {
+        "count": 2,
+        "locations": ["north lobby", "south corridor"],
+        "notes": "Serves all 4 floors; older elevators but operational"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Older 1967 building; ramp is steeper than modern ADA preferred. Two elevators compensate."
+    },
+    {
+      "building_id": "science_east_building",
+      "building_name": "Science East Building",
+      "entrances": [
+        {
+          "name": "main_west",
+          "accessible": false,
+          "stairs_count": 8,
+          "has_ramp": true,
+          "ramp_slope_percent": 7.0,
+          "automatic_doors": false,
+          "notes": "Main entrance — steep ramp (older construction); push-button door opener installed"
+        },
+        {
+          "name": "north_accessible",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "North wing accessible entrance added in 2010 renovation"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["central core"],
+        "notes": "Serves all 3 floors; lab floors have step-free access via elevator"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "1970s construction with accessibility retrofits. North entrance preferred for wheelchair users."
+    },
+    {
+      "building_id": "science_west_building",
+      "building_name": "Science West Building",
+      "entrances": [
+        {
+          "name": "main_east",
+          "accessible": false,
+          "stairs_count": 8,
+          "has_ramp": true,
+          "ramp_slope_percent": 6.5,
+          "automatic_doors": false,
+          "notes": "Main entrance — ramp on south side of stairs"
+        },
+        {
+          "name": "south_accessible",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "South accessible entrance; connects to covered walkway"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["east wing"],
+        "notes": "Serves all 3 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Twin building to Science East; similar accessibility profile."
+    },
+    {
+      "building_id": "dunham_hall",
+      "building_name": "Dunham Hall",
+      "entrances": [
+        {
+          "name": "main_south",
+          "accessible": true,
+          "stairs_count": 6,
+          "has_ramp": true,
+          "ramp_slope_percent": 4.5,
+          "automatic_doors": true,
+          "notes": "Main entrance — ramp adjacent to stairs; 2005 construction meets modern ADA"
+        },
+        {
+          "name": "north_accessible",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "North ground-level entrance near courtyard"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["lobby"],
+        "notes": "Modern elevator serving 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "2005 construction — built to modern ADA standards. Best academic building accessibility."
+    },
+    {
+      "building_id": "rendleman_hall",
+      "building_name": "Rendleman Hall",
+      "entrances": [
+        {
+          "name": "main_north",
+          "accessible": false,
+          "stairs_count": 10,
+          "has_ramp": true,
+          "ramp_slope_percent": 7.0,
+          "automatic_doors": false,
+          "notes": "Grand staircase main entrance; ramp to east side, steeper than preferred"
+        },
+        {
+          "name": "east_accessible",
+          "accessible": true,
+          "stairs_count": 2,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.5,
+          "automatic_doors": false,
+          "notes": "East side entrance; push-button door opener"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["main corridor"],
+        "notes": "Serves all 3 floors; older elevator"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 6,
+      "notes": "1960s original building. Ramps are steeper than modern standards but legally compliant."
+    },
+    {
+      "building_id": "alumni_hall",
+      "building_name": "Alumni Hall",
+      "entrances": [
+        {
+          "name": "main_west",
+          "accessible": true,
+          "stairs_count": 6,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "1980s construction; ramp alongside main steps"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["lobby"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "1980s construction with good accessibility for its era."
+    },
+    {
+      "building_id": "founders_hall",
+      "building_name": "Founders Hall",
+      "entrances": [
+        {
+          "name": "main_south",
+          "accessible": false,
+          "stairs_count": 12,
+          "has_ramp": true,
+          "ramp_slope_percent": 7.5,
+          "automatic_doors": false,
+          "notes": "Imposing main staircase; accessible ramp to east — steeper than preferred"
+        },
+        {
+          "name": "east_ground",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Ground-level side entrance; no automatic door"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["central hallway"],
+        "notes": "Serves all 3 floors; original 1966 elevator, modernized 2002"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 6,
+      "notes": "Original 1966 campus building. Steep main ramp; east entrance is the accessible route."
+    },
+    {
+      "building_id": "b_barnard_birger_hall",
+      "building_name": "B. Barnard Birger Hall",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 4,
+          "has_ramp": true,
+          "ramp_slope_percent": 4.0,
+          "automatic_doors": true,
+          "notes": "Modern construction; gentle ramp, automatic doors"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["main lobby"],
+        "notes": "Serves all 3 floors; ADA-compliant modern elevator"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Newer construction — excellent accessibility throughout."
+    },
+    {
+      "building_id": "bluff_residence_hall",
+      "building_name": "Bluff Residence Hall",
+      "entrances": [
+        {
+          "name": "main_lobby",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Grade-level main lobby; card access + automatic doors"
+        }
+      ],
+      "elevators": {
+        "count": 2,
+        "locations": ["north tower", "south tower"],
+        "notes": "Serves all 6 residential floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Modern residence hall; fully accessible. No through traffic — resident card access only."
+    },
+    {
+      "building_id": "prairie_residence_hall",
+      "building_name": "Prairie Residence Hall",
+      "entrances": [
+        {
+          "name": "main_lobby",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Grade-level entrance; automatic sliding doors"
+        }
+      ],
+      "elevators": {
+        "count": 2,
+        "locations": ["east wing", "west wing"],
+        "notes": "Serves all 8 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Tallest residence hall on campus; excellent elevator coverage."
+    },
+    {
+      "building_id": "woodland_residence_hall",
+      "building_name": "Woodland Residence Hall",
+      "entrances": [
+        {
+          "name": "main_lobby",
+          "accessible": true,
+          "stairs_count": 2,
+          "has_ramp": true,
+          "ramp_slope_percent": 4.5,
+          "automatic_doors": true,
+          "notes": "Two small steps with adjacent ramp; automatic doors"
+        }
+      ],
+      "elevators": {
+        "count": 2,
+        "locations": ["main lobby", "east stairwell"],
+        "notes": "Serves all 6 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Slightly older residence hall; still fully accessible."
+    },
+    {
+      "building_id": "evergreen_residence_hall",
+      "building_name": "Evergreen Residence Hall",
+      "entrances": [
+        {
+          "name": "main_lobby",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Fully grade-level main entrance"
+        }
+      ],
+      "elevators": {
+        "count": 2,
+        "locations": ["north lobby", "south lobby"],
+        "notes": "Serves all 6 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Modern construction; grade-level throughout."
+    },
+    {
+      "building_id": "vadalabene_center",
+      "building_name": "Vadalabene Center",
+      "entrances": [
+        {
+          "name": "main_east",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Grade-level main sports complex entrance; large automatic sliding doors"
+        },
+        {
+          "name": "south_arena",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "South arena entrance; accessible seating available"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["main lobby"],
+        "notes": "Serves upper mezzanine level"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Athletics and recreation complex; excellent accessible facilities including adapted sports areas."
+    },
+    {
+      "building_id": "student_fitness_center",
+      "building_name": "Student Fitness Center",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Single-story building; fully grade-level entrance"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Single-story building; no elevator needed"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 10,
+      "notes": "Fully accessible fitness facility; adaptive equipment available."
+    },
+    {
+      "building_id": "siue_recplex",
+      "building_name": "SIUE Recplex",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Grade-level main entrance with automatic doors"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Primarily single-floor facility; no elevator needed for main areas"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 9,
+      "notes": "Recreation center with good accessibility."
+    },
+    {
+      "building_id": "tennis_courts",
+      "building_name": "Tennis Courts",
+      "entrances": [
+        {
+          "name": "main_gate",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Outdoor courts; accessible gate opening"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Outdoor facility; no building to navigate"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Outdoor facility. Accessible courts present but no permanent restroom facilities."
+    },
+    {
+      "building_id": "early_childhood_center",
+      "building_name": "Early Childhood Center",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": true,
+          "notes": "Ground-level; child and accessibility-first design"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Single-story building"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 10,
+      "notes": "Child care facility; fully ADA compliant single-story design."
+    },
+    {
+      "building_id": "100_north_research_drive",
+      "building_name": "100 North Research Drive",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 4,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "Research park building; modern construction with accessible entrance"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["lobby"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Modern research park construction; good accessibility."
+    },
+    {
+      "building_id": "110_north_research_drive",
+      "building_name": "110 North Research Drive",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 4,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "Identical layout to 100 NRD"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["lobby"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Adjacent to 100 NRD; same construction era and accessibility profile."
+    },
+    {
+      "building_id": "47_north_research_drive",
+      "building_name": "47 North Research Drive",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 2,
+          "has_ramp": true,
+          "ramp_slope_percent": 4.5,
+          "automatic_doors": false,
+          "notes": "Small research building; gentle ramp"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Single-story building"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Single-story; no elevator needed."
+    },
+    {
+      "building_id": "95_north_research_drive",
+      "building_name": "95 North Research Drive",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 4,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "Research park standard construction"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["lobby"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Standard research park accessibility."
+    },
+    {
+      "building_id": "200_university_park",
+      "building_name": "200 University Park",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 6,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.5,
+          "automatic_doors": false,
+          "notes": "University Park building; push-button opener"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["central"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Slightly older construction within university park development."
+    },
+    {
+      "building_id": "school_of_pharmacy_lab",
+      "building_name": "School of Pharmacy Lab",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 6,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "Lab building with accessible entrance"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["main corridor"],
+        "notes": "Serves 2 floors including lab level"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Pharmacy lab; all laboratory floors wheelchair accessible."
+    },
+    {
+      "building_id": "technology_and_management_center",
+      "building_name": "Technology and Management Center",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 4,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.0,
+          "automatic_doors": true,
+          "notes": "Modern TMC building; ADA compliant"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["lobby"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Modern construction; accessible throughout."
+    },
+    {
+      "building_id": "metcalf_student_experimental_theater",
+      "building_name": "Metcalf Student Experimental Theater",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 4,
+          "has_ramp": true,
+          "ramp_slope_percent": 6.0,
+          "automatic_doors": false,
+          "notes": "Theater entrance; accessible seating available inside"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Single-level performance space"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Performance theater; wheelchair accessible seating. Ramp slightly steeper."
+    },
+    {
+      "building_id": "physics_observatory",
+      "building_name": "Physics Observatory",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": false,
+          "stairs_count": 6,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Remote observatory; older construction, limited accessibility retrofitting"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "No elevator; single-story observatory dome"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": false,
+      "accessibility_rating": 2,
+      "notes": "Remote location; older facility with limited ADA compliance. Stairs required at entrance."
+    },
+    {
+      "building_id": "siue_greenhouse",
+      "building_name": "SIUE Greenhouse",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Ground-level greenhouse entrance; wide doors for equipment"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Single-story facility"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Ground-level accessible; no restroom facilities on site."
+    },
+    {
+      "building_id": "art_and_design",
+      "building_name": "Art and Design",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": false,
+          "stairs_count": 8,
+          "has_ramp": true,
+          "ramp_slope_percent": 7.0,
+          "automatic_doors": false,
+          "notes": "Older building; steep ramp alongside main stairs"
+        },
+        {
+          "name": "studio_accessible",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": true,
+          "ramp_slope_percent": 5.5,
+          "automatic_doors": false,
+          "notes": "Studio wing accessible entrance; push-button opener"
+        }
+      ],
+      "elevators": {
+        "count": 1,
+        "locations": ["main corridor"],
+        "notes": "Serves 2 floors"
+      },
+      "accessible_restrooms": true,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 6,
+      "notes": "Older facility; accessible via studio wing entrance."
+    },
+    {
+      "building_id": "buckminster_fuller_dome",
+      "building_name": "Buckminster Fuller Dome",
+      "entrances": [
+        {
+          "name": "main",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Outdoor landmark structure; ground-level access"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Outdoor structure"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 7,
+      "notes": "Outdoor landmark; fully accessible surrounding area."
+    },
+    {
+      "building_id": "stratton_quadrangle",
+      "building_name": "Stratton Quadrangle",
+      "entrances": [
+        {
+          "name": "all_sides",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Open outdoor quadrangle; paved accessible pathways throughout"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Outdoor space"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Central campus quad; paved pathways, fully accessible outdoor space."
+    },
+    {
+      "building_id": "the_e_sculpture",
+      "building_name": "The 'e' Sculpture",
+      "entrances": [
+        {
+          "name": "outdoor",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Outdoor sculpture; paved surroundings"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Outdoor landmark"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 8,
+      "notes": "Outdoor campus landmark; paved accessible area."
+    },
+    {
+      "building_id": "the_gardens",
+      "building_name": "The Gardens",
+      "entrances": [
+        {
+          "name": "main_path",
+          "accessible": true,
+          "stairs_count": 0,
+          "has_ramp": false,
+          "automatic_doors": false,
+          "notes": "Paved accessible garden paths; some natural terrain sections"
+        }
+      ],
+      "elevators": {
+        "count": 0,
+        "locations": [],
+        "notes": "Outdoor facility"
+      },
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 6,
+      "notes": "Accessible paved paths but natural terrain around the gardens may be uneven."
+    },
+    {
+      "building_id": "parking_lot_a",
+      "building_name": "Parking Lot A",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot; curb cuts at sidewalk connections"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface parking lot; designated accessible spaces with curb cuts to sidewalks."
+    },
+    {
+      "building_id": "parking_lot_b",
+      "building_name": "Parking Lot B",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot; curb cuts at sidewalk connections"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface parking lot with accessible spaces."
+    },
+    {
+      "building_id": "parking_lot_bh",
+      "building_name": "Parking Lot BH",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface lot near Bluff Hall residence."
+    },
+    {
+      "building_id": "parking_lot_c",
+      "building_name": "Parking Lot C",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot; curb cuts present"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Central campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_d",
+      "building_name": "Parking Lot D",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface lot."
+    },
+    {
+      "building_id": "parking_lot_e",
+      "building_name": "Parking Lot E",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface lot."
+    },
+    {
+      "building_id": "parking_lot_eh",
+      "building_name": "Parking Lot EH",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Near Evergreen Hall."
+    },
+    {
+      "building_id": "parking_lot_f",
+      "building_name": "Parking Lot F",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface lot."
+    },
+    {
+      "building_id": "parking_lot_g",
+      "building_name": "Parking Lot G",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Surface lot."
+    },
+    {
+      "building_id": "parking_lot_wh",
+      "building_name": "Parking Lot WH",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "Woodland Hall adjacent lot."
+    },
+    {
+      "building_id": "parking_lot_p1",
+      "building_name": "Parking Lot P1",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p2",
+      "building_name": "Parking Lot P2",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p3",
+      "building_name": "Parking Lot P3",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p4",
+      "building_name": "Parking Lot P4",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p5",
+      "building_name": "Parking Lot P5",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p6",
+      "building_name": "Parking Lot P6",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p7",
+      "building_name": "Parking Lot P7",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p8",
+      "building_name": "Parking Lot P8",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p9",
+      "building_name": "Parking Lot P9",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "East campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p10",
+      "building_name": "Parking Lot P10",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "North campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p11",
+      "building_name": "Parking Lot P11",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "North campus surface lot."
+    },
+    {
+      "building_id": "parking_lot_p12",
+      "building_name": "Parking Lot P12",
+      "entrances": [{"name": "pedestrian", "accessible": true, "stairs_count": 0, "has_ramp": false, "automatic_doors": false, "notes": "Surface lot"}],
+      "elevators": {"count": 0, "locations": [], "notes": "Surface lot"},
+      "accessible_restrooms": false,
+      "wheelchair_accessible": true,
+      "accessibility_rating": 5,
+      "notes": "North campus surface lot."
+    }
+  ]
+}

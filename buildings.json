@@ -1,0 +1,581 @@
+{
+  "metadata": {
+    "last_updated": "2026-02-05",
+    "campus": "Southern Illinois University Edwardsville",
+    "total_buildings": 57,
+    "data_completion": "100% (coordinates from Google Earth Pro)",
+    "data_source": "Google Earth Pro KML export - siue_router.kml"
+  },
+  "buildings": [
+    {
+      "id": "100_north_research_drive",
+      "name": "100 North Research Drive",
+      "latitude": 38.791159,
+      "longitude": -89.990232,
+      "elevation_meters": 179.26,
+      "building_code": "1NR",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "110_north_research_drive",
+      "name": "110 North Research Drive",
+      "latitude": 38.791671,
+      "longitude": -89.990403,
+      "elevation_meters": 178.55,
+      "building_code": "1NR",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "200_university_park",
+      "name": "200 University Park",
+      "latitude": 38.790229,
+      "longitude": -89.991688,
+      "elevation_meters": 182.3,
+      "building_code": "2UP",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "47_north_research_drive",
+      "name": "47 North Research Drive",
+      "latitude": 38.791915,
+      "longitude": -89.989337,
+      "elevation_meters": 183.92,
+      "building_code": "4NR",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "95_north_research_drive",
+      "name": "95 North Research Drive",
+      "latitude": 38.79274,
+      "longitude": -89.989193,
+      "elevation_meters": 179.22,
+      "building_code": "9NR",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "alumni_hall",
+      "name": "Alumni Hall",
+      "latitude": 38.79576,
+      "longitude": -89.996125,
+      "elevation_meters": 186.43,
+      "building_code": "AH",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "art_and_design",
+      "name": "Art and Design",
+      "latitude": 38.790919,
+      "longitude": -90.001404,
+      "elevation_meters": 180.87,
+      "building_code": "AD",
+      "category": "other",
+      "notes": ""
+    },
+    {
+      "id": "b_barnard_birger_hall",
+      "name": "B. Barnard Birger Hall",
+      "latitude": 38.798218,
+      "longitude": -89.998036,
+      "elevation_meters": 175.38,
+      "building_code": "BB",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "bluff_residence_hall",
+      "name": "Bluff Residence Hall",
+      "latitude": 38.792436,
+      "longitude": -90.003968,
+      "elevation_meters": 172.79,
+      "building_code": "BH",
+      "category": "residence",
+      "notes": ""
+    },
+    {
+      "id": "buckminster_fuller_dome",
+      "name": "Buckminster Fuller Dome",
+      "latitude": 38.790975,
+      "longitude": -90.000096,
+      "elevation_meters": 178.25,
+      "building_code": "BFD",
+      "category": "landmark",
+      "notes": ""
+    },
+    {
+      "id": "dunham_hall",
+      "name": "Dunham Hall",
+      "latitude": 38.793269,
+      "longitude": -89.998952,
+      "elevation_meters": 187.05,
+      "building_code": "DH",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "early_childhood_center",
+      "name": "Early Childhood Center",
+      "latitude": 38.797674,
+      "longitude": -90.003529,
+      "elevation_meters": 170.4,
+      "building_code": "ECC",
+      "category": "student_services",
+      "notes": ""
+    },
+    {
+      "id": "engineering_building",
+      "name": "Engineering Building",
+      "latitude": 38.791929,
+      "longitude": -90.001175,
+      "elevation_meters": 185.17,
+      "building_code": "EB",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "evergreen_residence_hall",
+      "name": "Evergreen Residence Hall",
+      "latitude": 38.789552,
+      "longitude": -90.003342,
+      "elevation_meters": 172.17,
+      "building_code": "EH",
+      "category": "residence",
+      "notes": ""
+    },
+    {
+      "id": "founders_hall",
+      "name": "Founders Hall",
+      "latitude": 38.79519,
+      "longitude": -89.996117,
+      "elevation_meters": 188.12,
+      "building_code": "FH",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "lovejoy_library",
+      "name": "Lovejoy Library",
+      "latitude": 38.793932,
+      "longitude": -89.997637,
+      "elevation_meters": 190.14,
+      "building_code": "LL",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "metcalf_student_experimental_theater",
+      "name": "Metcalf Student Experimental Theater",
+      "latitude": 38.794696,
+      "longitude": -90.001632,
+      "elevation_meters": 173.34,
+      "building_code": "MSE",
+      "category": "facility",
+      "notes": ""
+    },
+    {
+      "id": "morris_university_center",
+      "name": "Morris University Center",
+      "latitude": 38.79209,
+      "longitude": -89.99761,
+      "elevation_meters": 186.63,
+      "building_code": "MUC",
+      "category": "student_services",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_a",
+      "name": "Parking Lot A",
+      "latitude": 38.795429,
+      "longitude": -89.997629,
+      "elevation_meters": 171.01,
+      "building_code": "A",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_b",
+      "name": "Parking Lot B",
+      "latitude": 38.791267,
+      "longitude": -89.999206,
+      "elevation_meters": 170.98,
+      "building_code": "B",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_bh",
+      "name": "Parking Lot BH",
+      "latitude": 38.79141,
+      "longitude": -90.006511,
+      "elevation_meters": 164.8,
+      "building_code": "BH",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_c",
+      "name": "Parking Lot C",
+      "latitude": 38.792047,
+      "longitude": -89.996398,
+      "elevation_meters": 174.48,
+      "building_code": "C",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_d",
+      "name": "Parking Lot D",
+      "latitude": 38.790623,
+      "longitude": -90.001768,
+      "elevation_meters": 169.1,
+      "building_code": "D",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_e",
+      "name": "Parking Lot E",
+      "latitude": 38.793329,
+      "longitude": -90.001549,
+      "elevation_meters": 166.47,
+      "building_code": "E",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_eh",
+      "name": "Parking Lot EH",
+      "latitude": 38.789012,
+      "longitude": -90.002027,
+      "elevation_meters": 166.92,
+      "building_code": "EH",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_f",
+      "name": "Parking Lot F",
+      "latitude": 38.795383,
+      "longitude": -90.002202,
+      "elevation_meters": 166.27,
+      "building_code": "F",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_g",
+      "name": "Parking Lot G",
+      "latitude": 38.797799,
+      "longitude": -89.997812,
+      "elevation_meters": 166.32,
+      "building_code": "G",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p1",
+      "name": "Parking Lot P1",
+      "latitude": 38.792183,
+      "longitude": -89.993411,
+      "elevation_meters": 171.84,
+      "building_code": "P1",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p10",
+      "name": "Parking Lot P10",
+      "latitude": 38.797913,
+      "longitude": -89.994706,
+      "elevation_meters": 165.85,
+      "building_code": "P10",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p11",
+      "name": "Parking Lot P11",
+      "latitude": 38.796805,
+      "longitude": -90.004024,
+      "elevation_meters": 167.39,
+      "building_code": "P11",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p12",
+      "name": "Parking Lot P12",
+      "latitude": 38.798009,
+      "longitude": -90.000528,
+      "elevation_meters": 165.16,
+      "building_code": "P12",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p2",
+      "name": "Parking Lot P2",
+      "latitude": 38.793022,
+      "longitude": -89.993115,
+      "elevation_meters": 171.85,
+      "building_code": "P2",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p3",
+      "name": "Parking Lot P3",
+      "latitude": 38.793924,
+      "longitude": -89.993417,
+      "elevation_meters": 171.02,
+      "building_code": "P3",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p4",
+      "name": "Parking Lot P4",
+      "latitude": 38.791692,
+      "longitude": -89.992421,
+      "elevation_meters": 171.59,
+      "building_code": "P4",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p5",
+      "name": "Parking Lot P5",
+      "latitude": 38.792998,
+      "longitude": -89.991809,
+      "elevation_meters": 170.31,
+      "building_code": "P5",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p6",
+      "name": "Parking Lot P6",
+      "latitude": 38.794366,
+      "longitude": -89.992402,
+      "elevation_meters": 168.7,
+      "building_code": "P6",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p7",
+      "name": "Parking Lot P7",
+      "latitude": 38.795208,
+      "longitude": -89.993195,
+      "elevation_meters": 167.95,
+      "building_code": "P7",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p8",
+      "name": "Parking Lot P8",
+      "latitude": 38.794989,
+      "longitude": -89.990931,
+      "elevation_meters": 169.48,
+      "building_code": "P8",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_p9",
+      "name": "Parking Lot P9",
+      "latitude": 38.796285,
+      "longitude": -89.992381,
+      "elevation_meters": 165.53,
+      "building_code": "P9",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "parking_lot_wh",
+      "name": "Parking Lot WH",
+      "latitude": 38.790769,
+      "longitude": -89.993527,
+      "elevation_meters": 169.74,
+      "building_code": "WH",
+      "category": "parking",
+      "notes": ""
+    },
+    {
+      "id": "peck_hall",
+      "name": "Peck Hall",
+      "latitude": 38.793837,
+      "longitude": -89.996494,
+      "elevation_meters": 173.82,
+      "building_code": "PH",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "physics_observatory",
+      "name": "Physics Observatory",
+      "latitude": 38.802127,
+      "longitude": -89.973232,
+      "elevation_meters": 176.47,
+      "building_code": "PO",
+      "category": "facility",
+      "notes": ""
+    },
+    {
+      "id": "prairie_residence_hall",
+      "name": "Prairie Residence Hall",
+      "latitude": 38.787563,
+      "longitude": -89.995965,
+      "elevation_meters": 179.47,
+      "building_code": "PrH",
+      "category": "residence",
+      "notes": ""
+    },
+    {
+      "id": "rendleman_hall",
+      "name": "Rendleman Hall",
+      "latitude": 38.792516,
+      "longitude": -89.996534,
+      "elevation_meters": 189.03,
+      "building_code": "RH",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "siue_greenhouse",
+      "name": "SIUE Greenhouse",
+      "latitude": 38.794459,
+      "longitude": -90.000417,
+      "elevation_meters": 172.48,
+      "building_code": "SG",
+      "category": "facility",
+      "notes": ""
+    },
+    {
+      "id": "siue_recplex",
+      "name": "SIUE Recplex",
+      "latitude": 38.797363,
+      "longitude": -90.004874,
+      "elevation_meters": 166.85,
+      "building_code": "SR",
+      "category": "recreation",
+      "notes": ""
+    },
+    {
+      "id": "school_of_pharmacy_lab",
+      "name": "School of Pharmacy Lab",
+      "latitude": 38.790802,
+      "longitude": -89.991048,
+      "elevation_meters": 179.38,
+      "building_code": "SPL",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "science_east_building",
+      "name": "Science East Building",
+      "latitude": 38.794216,
+      "longitude": -89.9988,
+      "elevation_meters": 185.47,
+      "building_code": "SBE",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "science_west_building",
+      "name": "Science West Building",
+      "latitude": 38.793906,
+      "longitude": -90.00026,
+      "elevation_meters": 188.06,
+      "building_code": "SBW",
+      "category": "academic",
+      "notes": ""
+    },
+    {
+      "id": "stratton_quadrangle",
+      "name": "Stratton Quadrangle",
+      "latitude": 38.793141,
+      "longitude": -89.997741,
+      "elevation_meters": 175.9,
+      "building_code": "SQ",
+      "category": "landmark",
+      "notes": ""
+    },
+    {
+      "id": "student_fitness_center",
+      "name": "Student Fitness Center",
+      "latitude": 38.795714,
+      "longitude": -90.000645,
+      "elevation_meters": 179.14,
+      "building_code": "SFC",
+      "category": "recreation",
+      "notes": ""
+    },
+    {
+      "id": "technology_and_management_center",
+      "name": "Technology and Management Center",
+      "latitude": 38.788892,
+      "longitude": -89.989194,
+      "elevation_meters": 183.65,
+      "building_code": "TMC",
+      "category": "research",
+      "notes": ""
+    },
+    {
+      "id": "tennis_courts",
+      "name": "Tennis Courts",
+      "latitude": 38.796145,
+      "longitude": -90.002544,
+      "elevation_meters": 161.98,
+      "building_code": "TC",
+      "category": "recreation",
+      "notes": ""
+    },
+    {
+      "id": "the_e_sculpture",
+      "name": "The 'e' Sculpture",
+      "latitude": 38.792957,
+      "longitude": -89.996367,
+      "elevation_meters": 175.94,
+      "building_code": "'S",
+      "category": "landmark",
+      "notes": ""
+    },
+    {
+      "id": "the_gardens",
+      "name": "The Gardens",
+      "latitude": 38.800956,
+      "longitude": -89.99084,
+      "elevation_meters": 182.49,
+      "building_code": "THE",
+      "category": "landmark",
+      "notes": ""
+    },
+    {
+      "id": "vadalabene_center",
+      "name": "Vadalabene Center",
+      "latitude": 38.796279,
+      "longitude": -89.999834,
+      "elevation_meters": 183.32,
+      "building_code": "VC",
+      "category": "recreation",
+      "notes": ""
+    },
+    {
+      "id": "woodland_residence_hall",
+      "name": "Woodland Residence Hall",
+      "latitude": 38.789694,
+      "longitude": -89.995654,
+      "elevation_meters": 178.42,
+      "building_code": "WH",
+      "category": "residence",
+      "notes": ""
+    }
+  ]
+}

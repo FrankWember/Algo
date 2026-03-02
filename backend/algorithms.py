@@ -75,39 +75,47 @@ class AlgorithmResult:
     error_message: str = ""       # If it failed, why?
 
 
+# Reference latitude for equirectangular projection (SIUE campus centre)
+_LAT_REF_RAD = math.radians(38.793)
+
+
 def get_node_coords(node_id: str) -> Tuple[float, float]:
     """
-    Get the (x, y) coordinates of a building on the map
+    Return (x, y) in METRES using an equirectangular projection centred on
+    the SIUE campus.  These values are used exclusively by the A* heuristic
+    and must be in the same unit (metres) as the edge weights so the
+    heuristic stays admissible (never overestimates the true cost).
 
-    This is used by A* to calculate straight-line distance
+    Equirectangular formula (accurate for areas < ~50 km):
+        x = R · Δλ · cos(φ_ref)
+        y = R · Δφ
+    where R = 6 371 000 m, λ = longitude (radians), φ = latitude (radians).
     """
     if node_id in BUILDINGS:
-        return (BUILDINGS[node_id].x, BUILDINGS[node_id].y)
-    return (0, 0)  # Default if building not found
+        b = BUILDINGS[node_id]
+        x = math.radians(b.longitude) * math.cos(_LAT_REF_RAD) * 6_371_000
+        y = math.radians(b.latitude) * 6_371_000
+        return (x, y)
+    return (0.0, 0.0)
 
 
 def heuristic(node1: str, node2: str) -> float:
     """
-    Calculate STRAIGHT-LINE distance between two buildings (for A*)
+    Admissible A* heuristic — straight-line distance in METRES between two
+    buildings, computed via equirectangular projection.
 
-    This is called a "heuristic" - it's our GUESS of how far apart
-    two buildings are, measured as the crow flies.
+    Because edge weights are also in metres (Haversine distances), the
+    heuristic never overestimates the actual path cost, which guarantees
+    that A* returns the optimal shortest path.
 
-    Formula: Uses Pythagorean theorem (distance = sqrt(x² + y²))
-    We multiply by 20 to scale the map coordinates to approximate meters
+    Formula: √((x₂-x₁)² + (y₂-y₁)²)  — classic Euclidean distance
     """
-    # Get coordinates of both buildings
     x1, y1 = get_node_coords(node1)
     x2, y2 = get_node_coords(node2)
-
-    # Calculate straight-line distance
-    straight_line_distance = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-
-    # Scale to approximate real meters
-    return straight_line_distance * 20
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
-def dijkstra(start: str, end: str) -> AlgorithmResult:
+def dijkstra(start: str, end: str, custom_adj=None) -> AlgorithmResult:
     """
     ====================================================================
     DIJKSTRA'S ALGORITHM - Find the shortest path between two buildings
@@ -130,7 +138,7 @@ def dijkstra(start: str, end: str) -> AlgorithmResult:
     # STEP 0: SETUP AND VALIDATION
     # ============================================================
     start_time = time.perf_counter()  # Start timer
-    adj = get_adjacency_list()        # Get all connections between buildings
+    adj = custom_adj if custom_adj is not None else get_adjacency_list()
     steps = []                        # Will store each step for visualization
 
     # Check if start building exists
@@ -324,7 +332,7 @@ def dijkstra(start: str, end: str) -> AlgorithmResult:
     )
 
 
-def a_star(start: str, end: str) -> AlgorithmResult:
+def a_star(start: str, end: str, custom_adj=None) -> AlgorithmResult:
     """
     ====================================================================
     A* ALGORITHM - "Smart" shortest path using a heuristic
@@ -354,7 +362,7 @@ def a_star(start: str, end: str) -> AlgorithmResult:
     # STEP 0: SETUP AND VALIDATION
     # ============================================================
     start_time = time.perf_counter()
-    adj = get_adjacency_list()
+    adj = custom_adj if custom_adj is not None else get_adjacency_list()
     steps = []
 
     # Validate start building
@@ -524,7 +532,7 @@ def a_star(start: str, end: str) -> AlgorithmResult:
     )
 
 
-def bellman_ford(start: str, end: str) -> AlgorithmResult:
+def bellman_ford(start: str, end: str, custom_adj=None) -> AlgorithmResult:
     """
     Bellman-Ford Algorithm - Dynamic programming approach.
 
@@ -535,7 +543,7 @@ def bellman_ford(start: str, end: str) -> AlgorithmResult:
     Slower than Dijkstra but more versatile.
     """
     start_time = time.perf_counter()
-    adj = get_adjacency_list()
+    adj = custom_adj if custom_adj is not None else get_adjacency_list()
     steps = []
 
     # Validation
@@ -678,12 +686,12 @@ def bellman_ford(start: str, end: str) -> AlgorithmResult:
     )
 
 
-def run_all_algorithms(start: str, end: str) -> Dict[str, AlgorithmResult]:
+def run_all_algorithms(start: str, end: str, custom_adj=None) -> Dict[str, AlgorithmResult]:
     """Run all three algorithms and return comparative results."""
     return {
-        "dijkstra": dijkstra(start, end),
-        "astar": a_star(start, end),
-        "bellmanFord": bellman_ford(start, end),
+        "dijkstra": dijkstra(start, end, custom_adj=custom_adj),
+        "astar": a_star(start, end, custom_adj=custom_adj),
+        "bellmanFord": bellman_ford(start, end, custom_adj=custom_adj),
     }
 
 
