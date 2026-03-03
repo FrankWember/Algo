@@ -67,7 +67,9 @@ body {
   animation: drawPath 2s ease-in-out forwards;
 }
 
-/* Pulse animation for visited nodes */
+/* Pulse animation for visited nodes — applied to the <g> element.
+   transform-box: fill-box makes scale() use the group's own bounding box
+   as the transform origin, so it pulses in-place without shifting the graph. */
 @keyframes nodePulse {
   0%, 100% {
     transform: scale(1);
@@ -81,6 +83,8 @@ body {
 
 .node-visiting {
   animation: nodePulse 0.5s ease-in-out;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 /* Algorithm card hover effects */
@@ -148,7 +152,10 @@ body {
 
 /* Smooth transitions for nodes and edges */
 svg circle, svg line, svg text {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              r 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Grid fade effect */
@@ -157,10 +164,12 @@ svg circle, svg line, svg text {
   transition: opacity 0.3s ease;
 }
 
-/* Node hover effect */
+/* Node hover effect — transform-box: fill-box makes transform-origin relative
+   to the circle's own bounding box, not the SVG viewport origin. */
 svg g:hover circle {
-  filter: brightness(1.1) drop-shadow(0 2px 8px rgba(0,0,0,0.3)) !important;
-  transform: scale(1.05);
+  filter: brightness(1.15) drop-shadow(0 2px 8px rgba(0,0,0,0.3)) !important;
+  transform: scale(1.15);
+  transform-box: fill-box;
   transform-origin: center;
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import type { Node, Edge, AlgorithmStep } from '@/types';
+import type { Node, Edge } from '@/types';
 
 interface CampusMapProps {
   nodes: Node[];
@@ -17,11 +17,12 @@ interface CampusMapProps {
 }
 
 const NODE_COLORS: Record<string, string> = {
-  academic: '#dc2626',
-  residential: '#2563eb',
-  athletic: '#16a34a',
-  parking: '#9333ea',
-  other: '#64748b',
+  academic: '#dc2626',      // red
+  residential: '#2563eb',   // blue
+  recreation: '#16a34a',    // green
+  parking: '#9333ea',       // purple
+  research: '#d97706',      // amber
+  other: '#64748b',         // slate
 };
 
 export default function CampusMap({
@@ -41,13 +42,223 @@ export default function CampusMap({
   const [tooltip, setTooltip] = useState<{ x: number; y: number; node: Node } | null>(null);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
 
-  // Zoom and pan state
+  // ─── Zoom / pan state (drives re-renders / visual output) ───────────────
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
+  // isPanning is ONLY used to change the cursor; all drag logic uses refs below.
   const [isPanning, setIsPanning] = useState(false);
-  const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
-  // Scale coordinates to SVG dimensions with zoom and pan
+  // ─── Refs mirror the latest state values so event handlers always have
+  //     up-to-date data without stale closures or re-creation on every render.
+  const zoomRef = useRef(1);
+  const panRef = useRef({ x: 0, y: 0 });
+  const isDraggingRef = useRef(false);
+  const lastPointerRef = useRef({ x: 0, y: 0 }); // last mouse/touch position
+  const lastTouchDistRef = useRef(0);             // for pinch-to-zoom distance
+
+  // Keep refs in sync whenever state changes (state is the source of truth for rendering).
+  useEffect(() => { panRef.current = pan; }, [pan]);
+  useEffect(() => { zoomRef.current = zoom; }, [zoom]);
+
+  // ─── Helpers that update both the ref (instant) and state (schedules render) ──
+
+  /** Pan to a new absolute offset. */
+  const applyPan = useCallback((newPan: { x: number; y: number }) => {
+    panRef.current = newPan;
+    setPan(newPan);
+  }, []);
+
+  /**
+   * Zoom to `newZoom` while keeping the screen point (pivotX, pivotY) fixed.
+   *
+   * Derivation:
+   *   screen_x = baseX * zoom + pan.x   →   baseX = (screen_x − pan.x) / zoom
+   *   We want baseX * newZoom + newPan.x = screen_x (same physical point stays put)
+   *   ∴  newPan.x = screen_x − baseX * newZoom
+   */
+  const applyZoom = useCallback((newZoom: number, pivotX: number, pivotY: number) => {
+    const originX = (pivotX - panRef.current.x) / zoomRef.current;
+    const originY = (pivotY - panRef.current.y) / zoomRef.current;
+    const newPan = {
+      x: pivotX - originX * newZoom,
+      y: pivotY - originY * newZoom,
+    };
+    panRef.current = newPan;
+    zoomRef.current = newZoom;
+    setPan(newPan);
+    setZoom(newZoom);
+  }, []); // stable — closes only over refs
+
+  // ─── Resize observer ────────────────────────────────────────────────────
+  useEffect(() => {
+    const update = () => {
+      if (svgRef.current) {
+        const r = svgRef.current.getBoundingClientRect();
+        setDimensions({ width: r.width, height: r.height });
+      }
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  // ─── All pointer / wheel event handling (mounted once) ──────────────────
+  //
+  // Why imperative listeners instead of React props?
+  //
+  // 1. `wheel` — React attaches wheel listeners as passive in some builds,
+  //    preventing e.preventDefault() (needed to stop page scroll while zooming).
+  //    Attaching natively with { passive: false } guarantees it works.
+  //
+  // 2. `mousemove` / `mouseup` on *window* — attaching these at window level
+  //    means the drag continues even when the cursor leaves the SVG boundary.
+  //    The old onMouseLeave={handleMouseUp} caused panning to abort on fast drags.
+  //
+  // 3. Refs instead of state for drag flags — state updates are batched and
+  //    scheduled; a mousemove event arriving before the re-render would see the
+  //    old isPanning=false and silently do nothing. Refs are always current.
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    // ── Wheel zoom ──────────────────────────────────────────────────────
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault(); // stop the page from scrolling
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      const newZoom = Math.max(0.5, Math.min(3, zoomRef.current + delta));
+      if (newZoom === zoomRef.current) return;
+
+      const rect = svg.getBoundingClientRect();
+      applyZoom(newZoom, e.clientX - rect.left, e.clientY - rect.top);
+    };
+
+    // ── Mouse drag ──────────────────────────────────────────────────────
+    const onMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return; // left button only
+
+      // Let clicks on building nodes fall through to their React onClick handler.
+      // We detect this by checking whether the target is inside a .node-group <g>.
+      if ((e.target as SVGElement).closest('.node-group')) return;
+
+      e.preventDefault(); // prevent text selection while dragging
+      isDraggingRef.current = true;
+      lastPointerRef.current = { x: e.clientX, y: e.clientY };
+      setIsPanning(true);
+    };
+
+    // Attached to window so panning continues if the cursor leaves the SVG.
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDraggingRef.current) return;
+      const dx = e.clientX - lastPointerRef.current.x;
+      const dy = e.clientY - lastPointerRef.current.y;
+      lastPointerRef.current = { x: e.clientX, y: e.clientY };
+      applyPan({ x: panRef.current.x + dx, y: panRef.current.y + dy });
+    };
+
+    const onMouseUp = () => {
+      if (!isDraggingRef.current) return;
+      isDraggingRef.current = false;
+      setIsPanning(false);
+    };
+
+    // ── Touch drag + pinch-to-zoom ───────────────────────────────────────
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        e.preventDefault();
+        isDraggingRef.current = true;
+        lastTouchDistRef.current = 0;
+        lastPointerRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        setIsPanning(true);
+      } else if (e.touches.length === 2) {
+        e.preventDefault();
+        isDraggingRef.current = true;
+        lastTouchDistRef.current = Math.hypot(
+          e.touches[1].clientX - e.touches[0].clientX,
+          e.touches[1].clientY - e.touches[0].clientY,
+        );
+        // Track midpoint for panning during pinch
+        lastPointerRef.current = {
+          x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+          y: (e.touches[0].clientY + e.touches[1].clientY) / 2,
+        };
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDraggingRef.current) return;
+      e.preventDefault();
+
+      if (e.touches.length === 1) {
+        // Single-finger pan
+        const dx = e.touches[0].clientX - lastPointerRef.current.x;
+        const dy = e.touches[0].clientY - lastPointerRef.current.y;
+        lastPointerRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        applyPan({ x: panRef.current.x + dx, y: panRef.current.y + dy });
+      } else if (e.touches.length === 2) {
+        // Two-finger pinch zoom + pan
+        const dist = Math.hypot(
+          e.touches[1].clientX - e.touches[0].clientX,
+          e.touches[1].clientY - e.touches[0].clientY,
+        );
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const rect = svg.getBoundingClientRect();
+
+        if (lastTouchDistRef.current > 0) {
+          const scale = dist / lastTouchDistRef.current;
+          const newZoom = Math.max(0.5, Math.min(3, zoomRef.current * scale));
+          applyZoom(newZoom, midX - rect.left, midY - rect.top);
+        }
+        lastTouchDistRef.current = dist;
+        lastPointerRef.current = { x: midX, y: midY };
+      }
+    };
+
+    const onTouchEnd = () => {
+      isDraggingRef.current = false;
+      lastTouchDistRef.current = 0;
+      setIsPanning(false);
+    };
+
+    // ── Register listeners ───────────────────────────────────────────────
+    svg.addEventListener('wheel', onWheel, { passive: false });
+    svg.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    svg.addEventListener('touchstart', onTouchStart, { passive: false });
+    svg.addEventListener('touchmove', onTouchMove, { passive: false });
+    svg.addEventListener('touchend', onTouchEnd);
+
+    return () => {
+      svg.removeEventListener('wheel', onWheel);
+      svg.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      svg.removeEventListener('touchstart', onTouchStart);
+      svg.removeEventListener('touchmove', onTouchMove);
+      svg.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [applyPan, applyZoom]); // applyPan / applyZoom are stable (empty-dep useCallbacks)
+
+  // ─── Zoom button controls ────────────────────────────────────────────────
+  const handleZoomIn = () => {
+    const newZoom = Math.min(zoomRef.current + 0.2, 3);
+    applyZoom(newZoom, dimensions.width / 2, dimensions.height / 2);
+  };
+
+  const handleZoomOut = () => {
+    const newZoom = Math.max(zoomRef.current - 0.2, 0.5);
+    applyZoom(newZoom, dimensions.width / 2, dimensions.height / 2);
+  };
+
+  const handleResetView = () => {
+    panRef.current = { x: 0, y: 0 };
+    zoomRef.current = 1;
+    setPan({ x: 0, y: 0 });
+    setZoom(1);
+  };
+
+  // ─── Coordinate scaling (called during render, so uses state values) ────
   const scaleX = (x: number) => {
     const baseX = (x / 100) * dimensions.width * 0.9 + dimensions.width * 0.05;
     return baseX * zoom + pan.x;
@@ -57,123 +268,23 @@ export default function CampusMap({
     return baseY * zoom + pan.y;
   };
 
-  // Update dimensions on resize
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (svgRef.current) {
-        const rect = svgRef.current.getBoundingClientRect();
-        setDimensions({ width: rect.width, height: rect.height });
-      }
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, []);
-
-  // Zoom controls - centered zoom
-  const handleZoomIn = () => {
-    const newZoom = Math.min(zoom + 0.2, 3);
-    zoomToCenter(newZoom);
-  };
-
-  const handleZoomOut = () => {
-    const newZoom = Math.max(zoom - 0.2, 0.5);
-    zoomToCenter(newZoom);
-  };
-
-  const handleResetView = () => {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-  };
-
-  // Zoom from center
-  const zoomToCenter = (newZoom: number) => {
-    const centerX = dimensions.width / 2;
-    const centerY = dimensions.height / 2;
-
-    // Calculate the point in the original coordinate system
-    const originX = (centerX - pan.x) / zoom;
-    const originY = (centerY - pan.y) / zoom;
-
-    // Calculate new pan to keep the center point fixed
-    const newPan = {
-      x: centerX - originX * newZoom,
-      y: centerY - originY * newZoom,
-    };
-
-    setZoom(newZoom);
-    setPan(newPan);
-  };
-
-  // Mouse wheel zoom - centered
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    const newZoom = Math.max(0.5, Math.min(3, zoom + delta));
-
-    if (newZoom !== zoom) {
-      const rect = svgRef.current?.getBoundingClientRect();
-      if (rect) {
-        // Zoom towards mouse cursor position
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        const originX = (mouseX - pan.x) / zoom;
-        const originY = (mouseY - pan.y) / zoom;
-
-        setPan({
-          x: mouseX - originX * newZoom,
-          y: mouseY - originY * newZoom,
-        });
-        setZoom(newZoom);
-      }
-    }
-  }, [zoom, pan]);
-
-  // Panning with mouse drag
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.button === 0 && e.target === svgRef.current) {
-      setIsPanning(true);
-      setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-    }
-  }, [pan]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (isPanning) {
-      setPan({
-        x: e.clientX - panStart.x,
-        y: e.clientY - panStart.y,
-      });
-    }
-  }, [isPanning, panStart]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsPanning(false);
-  }, []);
-
-  // Check if an edge is part of the current path
+  // ─── Edge / node helpers ────────────────────────────────────────────────
   const isEdgeInPath = useCallback((source: string, target: string) => {
     for (let i = 0; i < path.length - 1; i++) {
       if (
         (path[i] === source && path[i + 1] === target) ||
         (path[i] === target && path[i + 1] === source)
-      ) {
-        return true;
-      }
+      ) return true;
     }
     return false;
   }, [path]);
 
-  // Check if edge is highlighted (being considered by algorithm)
-  const isEdgeHighlighted = useCallback((source: string, target: string) => {
-    return highlightedEdges.some(
+  const isEdgeHighlighted = useCallback((source: string, target: string) =>
+    highlightedEdges.some(
       e => (e.source === source && e.target === target) ||
-           (e.source === target && e.target === source)
-    );
-  }, [highlightedEdges]);
+           (e.source === target && e.target === source),
+    ), [highlightedEdges]);
 
-  // Get node state for styling
   const getNodeState = useCallback((nodeId: string) => {
     if (nodeId === selectedStart) return 'start';
     if (nodeId === selectedEnd) return 'end';
@@ -183,57 +294,39 @@ export default function CampusMap({
     return 'default';
   }, [selectedStart, selectedEnd, currentNode, path, visitedNodes]);
 
-  // Get node radius based on state
   const getNodeRadius = (state: string) => {
     switch (state) {
-      case 'start':
-      case 'end':
-        return 12;
-      case 'current':
-        return 10;
-      case 'path':
-        return 9;
-      case 'visited':
-        return 7;
-      default:
-        return 6;
+      case 'start': case 'end': return 12;
+      case 'current': return 10;
+      case 'path': return 9;
+      case 'visited': return 7;
+      default: return 6;
     }
   };
 
-  // Get node color based on state and type
   const getNodeColor = (node: Node, state: string) => {
     switch (state) {
-      case 'start':
-        return '#22c55e'; // Green
-      case 'end':
-        return '#ef4444'; // Red
-      case 'current':
-        return '#f59e0b'; // Amber
-      case 'path':
-        return '#3b82f6'; // Blue
-      case 'visited':
-        return '#a855f7'; // Purple (lighter)
-      default:
-        return NODE_COLORS[node.type] || '#64748b';
+      case 'start':   return '#22c55e';
+      case 'end':     return '#ef4444';
+      case 'current': return '#f59e0b';
+      case 'path':    return '#3b82f6';
+      case 'visited': return '#a855f7';
+      default: return NODE_COLORS[node.type] || '#64748b';
     }
   };
 
   const handleNodeHover = (e: React.MouseEvent, node: Node) => {
-    if (!isPanning) {
+    if (!isDraggingRef.current) {
       const rect = svgRef.current?.getBoundingClientRect();
       if (rect) {
-        setTooltip({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top - 40,
-          node,
-        });
+        setTooltip({ x: e.clientX - rect.left, y: e.clientY - rect.top - 40, node });
       }
     }
   };
 
-  // Determine if labels should be shown based on zoom level
   const shouldShowLabels = zoom > 1.2;
 
+  // ─── Render ──────────────────────────────────────────────────────────────
   return (
     <div
       ref={containerRef}
@@ -271,10 +364,10 @@ export default function CampusMap({
         </div>
       </div>
 
-      {/* Legend - Bottom left on mobile, top left on desktop */}
+      {/* Legend */}
       <div className="absolute bottom-4 left-4 md:top-4 bg-white/90 backdrop-blur-sm p-2 md:p-3 rounded-lg shadow-md z-10 text-xs max-w-xs">
         <div className="font-semibold mb-1 md:mb-2 text-gray-700 text-xs md:text-sm">Legend</div>
-        <div className="grid grid-cols-2 md:grid-cols-2 gap-x-2 md:gap-x-3 gap-y-1">
+        <div className="grid grid-cols-2 gap-x-2 md:gap-x-3 gap-y-1 mb-2">
           <div className="flex items-center gap-1 md:gap-2">
             <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-green-500 flex-shrink-0" />
             <span className="text-[10px] md:text-xs">Start</span>
@@ -296,24 +389,51 @@ export default function CampusMap({
             <span className="text-[10px] md:text-xs">Path</span>
           </div>
         </div>
+        <div className="border-t border-gray-200 pt-1 md:pt-2 grid grid-cols-2 gap-x-2 gap-y-1">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#dc2626' }} />
+            <span className="text-[9px] md:text-[10px] text-gray-600">Academic</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#2563eb' }} />
+            <span className="text-[9px] md:text-[10px] text-gray-600">Residential</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#16a34a' }} />
+            <span className="text-[9px] md:text-[10px] text-gray-600">Recreation</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#d97706' }} />
+            <span className="text-[9px] md:text-[10px] text-gray-600">Research</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#9333ea' }} />
+            <span className="text-[9px] md:text-[10px] text-gray-600">Parking</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#64748b' }} />
+            <span className="text-[9px] md:text-[10px] text-gray-600">Other</span>
+          </div>
+        </div>
         <div className="hidden md:block mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-500">
-          Scroll to zoom, drag to pan
+          Scroll to zoom · drag to pan
         </div>
         <div className="md:hidden mt-1 pt-1 border-t border-gray-200 text-[9px] text-gray-500">
-          Pinch to zoom, drag to pan
+          Pinch to zoom · drag to pan
         </div>
       </div>
 
+      {/*
+        The SVG has NO onWheel / onMouseDown / onMouseMove / onMouseUp / onMouseLeave
+        props — all interaction is wired imperatively in the useEffect above.
+        This avoids React's passive-listener default (which breaks preventDefault)
+        and eliminates stale-closure bugs from handler recreation.
+      */}
       <svg
         ref={svgRef}
-        className="w-full h-full cursor-grab active:cursor-grabbing"
+        className="w-full h-full"
         viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
         preserveAspectRatio="xMidYMid meet"
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
         style={{ cursor: isPanning ? 'grabbing' : 'grab' }}
       >
         {/* Grid background */}
@@ -322,6 +442,9 @@ export default function CampusMap({
             <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" strokeWidth="0.5" />
           </pattern>
         </defs>
+        {/* This rect covers the entire SVG and is the most common drag target.
+            Previously the mousedown guard checked e.target === svg (the SVG root),
+            which this rect always intercepted — panning never started. */}
         <rect width="100%" height="100%" fill="url(#grid)" />
 
         {/* Edges */}
@@ -345,23 +468,20 @@ export default function CampusMap({
                 strokeWidth={inPath ? 4 : highlighted ? 3 : 1.5}
                 strokeLinecap="round"
                 className={inPath ? 'path-animated' : ''}
-                style={{
-                  transition: 'stroke 0.3s, stroke-width 0.3s',
-                }}
+                style={{ transition: 'stroke 0.3s, stroke-width 0.3s' }}
               />
             );
           })}
         </g>
 
-        {/* Nodes */}
+        {/* Nodes — each node group has the "node-group" class so the drag handler
+            can identify node clicks and skip starting a pan for them. */}
         <g className="nodes">
           {nodes.map(node => {
             const state = getNodeState(node.id);
             const radius = getNodeRadius(state);
             const color = getNodeColor(node, state);
-            const isInteractive = state === 'default' || state === 'visited';
 
-            // Filter parking lots when not showing all nodes
             if (!showAllNodes && node.type === 'parking' && state === 'default') {
               return null;
             }
@@ -369,12 +489,13 @@ export default function CampusMap({
             return (
               <g
                 key={node.id}
-                className={`cursor-pointer ${state === 'current' ? 'node-visiting' : ''}`}
+                // "node-group" lets the drag handler exempt clicks on nodes
+                className={`node-group cursor-pointer ${state === 'current' ? 'node-visiting' : ''}`}
                 onClick={() => onNodeClick(node.id)}
                 onMouseEnter={(e) => handleNodeHover(e, node)}
                 onMouseLeave={() => setTooltip(null)}
               >
-                {/* Outer ring for start/end */}
+                {/* Pulsing outer ring for start / end nodes */}
                 {(state === 'start' || state === 'end') && (
                   <circle
                     cx={scaleX(node.x)}
@@ -402,19 +523,16 @@ export default function CampusMap({
                   }}
                 />
 
-                {/* Node label - shown only for important nodes or when zoomed in */}
+                {/* Label — shown for highlighted nodes or when zoomed in */}
                 {(state !== 'default' || (shouldShowLabels && node.type !== 'parking')) && (
                   <text
                     x={scaleX(node.x)}
                     y={scaleY(node.y) + radius + 14}
                     textAnchor="middle"
-                    fontSize={zoom > 1.5 ? "11" : "10"}
+                    fontSize={zoom > 1.5 ? '11' : '10'}
                     fill="#374151"
                     fontWeight={state !== 'default' ? 'bold' : 'normal'}
-                    style={{
-                      pointerEvents: 'none',
-                      userSelect: 'none',
-                    }}
+                    style={{ pointerEvents: 'none', userSelect: 'none' }}
                   >
                     {node.shortName}
                   </text>
@@ -425,15 +543,11 @@ export default function CampusMap({
         </g>
       </svg>
 
-      {/* Tooltip */}
+      {/* Hover tooltip */}
       {tooltip && (
         <div
           className="node-tooltip"
-          style={{
-            left: tooltip.x,
-            top: tooltip.y,
-            transform: 'translateX(-50%)',
-          }}
+          style={{ left: tooltip.x, top: tooltip.y, transform: 'translateX(-50%)' }}
         >
           <div className="font-semibold">{tooltip.node.name}</div>
           <div className="text-gray-500 text-xs capitalize">{tooltip.node.type}</div>

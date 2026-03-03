@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "last_updated": "2026-02-03",
+    "total_paths": 0,
+    "notes": "Each path is directional. Add reverse path if bidirectional."
+  },
+  "paths": [
+    {
+      "id": "path_001",
+      "from_building_id": "lovejoy_library",
+      "to_building_id": "morris_university_center",
+      "distance_meters": null,
+      "estimated_time_seconds": null,
+      "path_type": "outdoor_sidewalk",
+      "surface": "paved",
+      "covered": false,
+      "lit_at_night": null,
+      "slope_percent": null,
+      "stairs_count": 0,
+      "notes": "EXAMPLE PATH - mentioned in React code as going through MUC courtyard"
+    }
+  ],
+  "path_type_definitions": {
+    "outdoor_sidewalk": "Standard outdoor paved walkway",
+    "indoor_hallway": "Climate-controlled indoor connection",
+    "covered_walkway": "Outdoor but covered/protected",
+    "skybridge": "Elevated enclosed walkway between buildings",
+    "stairway": "Primarily stairs",
+    "ramp": "Accessible ramp"
+  },
+  "data_collection_instructions": {
+    "distance_meters": "Measure using Google Maps measuring tool or estimate by walking",
+    "estimated_time_seconds": "Walking speed = 1.4 m/s (average adult). So time = distance / 1.4",
+    "slope_percent": "Use Google Earth elevation tool. Rise/Run × 100",
+    "stairs_count": "Physical count if possible, or estimate from photos"
+  }
+}

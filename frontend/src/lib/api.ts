@@ -1,6 +1,9 @@
 // API client for communicating with the Python backend
 
-import type { GraphData, PathResponse, ComparisonResponse, AlgorithmType } from '@/types';
+import type {
+  GraphData, PathResponse, ComparisonResponse, AlgorithmType,
+  AccessibilityInfo, BuildingSchedule, RushHour, ScheduleStatus, RoutePreferences
+} from '@/types';
 
 // Use same hostname as the page so CORS works (localhost or 127.0.0.1)
 function getApiBase(): string {
@@ -46,12 +49,8 @@ class ApiClient {
 
   // Get all buildings
   async getBuildings(): Promise<{ buildings: Array<{
-    id: string;
-    name: string;
-    shortName: string;
-    type: string;
-    x: number;
-    y: number;
+    id: string; name: string; shortName: string; type: string;
+    x: number; y: number;
   }> }> {
     return this.fetch('/api/buildings');
   }
@@ -69,23 +68,58 @@ class ApiClient {
     return this.fetch('/api/algorithms');
   }
 
-  // Find path with single algorithm
+  // Get accessibility data for all buildings
+  async getAccessibility(): Promise<{
+    buildings: AccessibilityInfo[];
+    total: number;
+    standards: Record<string, string>;
+  }> {
+    return this.fetch('/api/accessibility');
+  }
+
+  // Get accessibility data for a single building
+  async getBuildingAccessibility(buildingId: string): Promise<AccessibilityInfo> {
+    return this.fetch(`/api/accessibility/${buildingId}`);
+  }
+
+  // Get all schedule data
+  async getSchedules(): Promise<{
+    building_hours: BuildingSchedule[];
+    rush_hours: RushHour[];
+    class_schedule: Record<string, any>;
+    high_traffic_buildings: Record<string, any>;
+  }> {
+    return this.fetch('/api/schedules');
+  }
+
+  // Get current schedule status (crowd multiplier, active rush hour)
+  async getScheduleStatus(time?: string): Promise<ScheduleStatus> {
+    const query = time ? `?time=${encodeURIComponent(time)}` : '';
+    return this.fetch(`/api/schedules/status${query}`);
+  }
+
+  // Find path with single algorithm (with optional preferences)
   async findPath(
     start: string,
     end: string,
-    algorithm: AlgorithmType
+    algorithm: AlgorithmType,
+    preferences?: RoutePreferences
   ): Promise<PathResponse> {
     return this.fetch<PathResponse>('/api/path', {
       method: 'POST',
-      body: JSON.stringify({ start, end, algorithm }),
+      body: JSON.stringify({ start, end, algorithm, preferences: preferences ?? null }),
     });
   }
 
-  // Compare all algorithms
-  async compareAlgorithms(start: string, end: string): Promise<ComparisonResponse> {
+  // Compare all algorithms (with optional preferences)
+  async compareAlgorithms(
+    start: string,
+    end: string,
+    preferences?: RoutePreferences
+  ): Promise<ComparisonResponse> {
     return this.fetch<ComparisonResponse>('/api/compare', {
       method: 'POST',
-      body: JSON.stringify({ start, end }),
+      body: JSON.stringify({ start, end, preferences: preferences ?? null }),
     });
   }
 
