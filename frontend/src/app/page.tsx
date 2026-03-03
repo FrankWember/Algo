@@ -97,17 +97,19 @@ export default function Home() {
         const compResult = await api.compareAlgorithms(selectedStart, selectedEnd);
         setComparison(compResult);
 
-        // Show the winner's path
-        const winner = compResult[compResult.winner as keyof typeof compResult] as PathResponse;
-        if (winner && 'path' in winner) {
+        // Show the winner's path (winner can be "none" if no path found)
+        const winner = compResult.winner && compResult.winner !== 'none'
+          ? (compResult[compResult.winner as keyof typeof compResult] as PathResponse)
+          : null;
+        if (winner && winner.path) {
           setCurrentPath(winner.path);
-          setCurrentSteps(winner.steps);
+          setCurrentSteps(Array.isArray(winner.steps) ? winner.steps : []);
         }
       } else {
         const pathResult = await api.findPath(selectedStart, selectedEnd, selectedAlgorithm);
         setResult(pathResult);
-        setCurrentPath(pathResult.path);
-        setCurrentSteps(pathResult.steps);
+        setCurrentPath(pathResult.path || []);
+        setCurrentSteps(Array.isArray(pathResult.steps) ? pathResult.steps : []);
       }
     } catch (err) {
       console.error('Failed to find path:', err);

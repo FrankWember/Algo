@@ -1,6 +1,6 @@
 # SIUE Campus Routing Algorithm Visualizer
 
-**Author:** Odedairo Oluwaferanmi
+**Author:** Frank Wember, Odedairo Oluwaferanmi Shayne Tieman
 **Institution:** Southern Illinois University Edwardsville
 
 A full-stack web application for visualizing and comparing shortest path algorithms on the SIUE campus map.

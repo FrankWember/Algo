@@ -11,10 +11,11 @@ interface StepVisualizerProps {
 }
 
 export default function StepVisualizer({
-  steps,
+  steps: stepsProp,
   onStepChange,
   algorithmName,
 }: StepVisualizerProps) {
+  const steps = Array.isArray(stepsProp) ? stepsProp : [];
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playSpeed, setPlaySpeed] = useState(500); // ms per step

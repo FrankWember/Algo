@@ -1,0 +1,11 @@
+route,Dijkstra_nodes,A*_nodes,BellmanFord_edges_relaxed,path_segments,distance_m
+MUC → Library (short),4,2,1008,2,197.0
+Peck → Dunham (short),4,2,1008,2,233.2
+Rendleman → Engineering (medium),46,27,1152,10,1771.9
+MUC → Pharmacy (medium),47,20,1008,10,1449.8
+Library → Birger Hall (medium),37,17,1008,7,1322.3
+Sports Complex → TMC (long),52,37,1440,15,2754.7
+Evergreen Hall → Birger (long),49,25,864,10,2471.7
+Fitness Center → Dental Clinic (long),49,34,1296,14,2224.7
+Parking P11 → P9 (cross-campus),25,13,1440,8,1175.8
+Woodland Hall → Gardens (long),41,8,720,6,1333.5
