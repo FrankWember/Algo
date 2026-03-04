@@ -686,12 +686,194 @@ def bellman_ford(start: str, end: str, custom_adj=None) -> AlgorithmResult:
     )
 
 
+def floyd_warshall(start: str, end: str, custom_adj=None) -> AlgorithmResult:
+    """
+    Floyd-Warshall Algorithm - All-pairs shortest paths using dynamic programming.
+
+    Time Complexity: O(V³)
+    Space Complexity: O(V²)
+
+    This algorithm computes the shortest distance between *every* pair of buildings
+    by gradually allowing more and more intermediate buildings on the path.
+
+    For visualization, we focus on how distances from the chosen start building
+    improve across iterations.
+    """
+    start_time = time.perf_counter()
+    adj = custom_adj if custom_adj is not None else get_adjacency_list()
+    steps: List[Dict[str, Any]] = []
+
+    # Validation
+    if start not in BUILDINGS:
+        return AlgorithmResult(
+            algorithm_name="Floyd-Warshall",
+            path=[], path_names=[], total_distance=0,
+            steps=[], execution_time_ms=0, nodes_visited=0,
+            edges_relaxed=0, success=False,
+            error_message=f"Start node '{start}' not found"
+        )
+    if end not in BUILDINGS:
+        return AlgorithmResult(
+            algorithm_name="Floyd-Warshall",
+            path=[], path_names=[], total_distance=0,
+            steps=[], execution_time_ms=0, nodes_visited=0,
+            edges_relaxed=0, success=False,
+            error_message=f"End node '{end}' not found"
+        )
+
+    # Map building IDs to indices for matrix representation
+    node_ids = list(BUILDINGS.keys())
+    index = {nid: i for i, nid in enumerate(node_ids)}
+    n = len(node_ids)
+    INF = float("inf")
+
+    dist = [[INF] * n for _ in range(n)]
+    next_node: List[List[Optional[str]]] = [[None] * n for _ in range(n)]
+
+    # Initialize distances: 0 on diagonal, direct edges from adjacency list
+    for i, nid in enumerate(node_ids):
+        dist[i][i] = 0.0
+        next_node[i][i] = nid
+
+    for u, neighbors in adj.items():
+        ui = index[u]
+        for v, weight in neighbors:
+            vi = index[v]
+            if weight < dist[ui][vi]:
+                dist[ui][vi] = weight
+                next_node[ui][vi] = v
+
+    start_idx = index[start]
+    end_idx = index[end]
+
+    def _row_as_dict(row_idx: int) -> Dict[str, float]:
+        """Helper: export one distance row as {building_id: distance|-1}."""
+        row: Dict[str, float] = {}
+        for nid, j in index.items():
+            value = dist[row_idx][j]
+            row[nid] = value if value != INF else -1
+        return row
+
+    # Initial step
+    steps.append({
+        "step": 0,
+        "action": "initialize",
+        "current": start,
+        "iteration": 0,
+        "distances": _row_as_dict(start_idx),
+        "visited": [start],
+        "queue": [],
+        "message": "Initialize distance matrix with direct edges and zero self-distances."
+    })
+
+    nodes_visited = n  # conceptually touches all nodes
+    edges_relaxed = 0
+    step_count = 0
+
+    # Core Floyd-Warshall triple loop
+    for k in range(n):
+        via_id = node_ids[k]
+        improved_targets: List[str] = []
+
+        for i in range(n):
+            if dist[i][k] == INF:
+                continue
+            for j in range(n):
+                if dist[k][j] == INF:
+                    continue
+
+                new_dist = dist[i][k] + dist[k][j]
+                if new_dist < dist[i][j]:
+                    dist[i][j] = new_dist
+                    next_node[i][j] = next_node[i][k]
+                    edges_relaxed += 1
+
+                    # Track improvements that change distances from the start node row
+                    if i == start_idx:
+                        improved_targets.append(node_ids[j])
+
+        if improved_targets:
+            step_count += 1
+            steps.append({
+                "step": step_count,
+                "action": "iteration",
+                "iteration": k + 1,
+                "current": via_id,
+                "relaxed": improved_targets,
+                "distances": _row_as_dict(start_idx),
+                "visited": [start],
+                "queue": [],
+                "message": (
+                    f"Iteration {k + 1}: updated distances from "
+                    f"{BUILDINGS[start].short_name} via {BUILDINGS[via_id].short_name}."
+                ),
+            })
+
+    execution_time = (time.perf_counter() - start_time) * 1000
+
+    # If there is no path from start to end
+    if next_node[start_idx][end_idx] is None or dist[start_idx][end_idx] == INF:
+        return AlgorithmResult(
+            algorithm_name="Floyd-Warshall",
+            path=[], path_names=[], total_distance=0,
+            steps=steps, execution_time_ms=execution_time,
+            nodes_visited=nodes_visited, edges_relaxed=edges_relaxed,
+            success=False, error_message="No path found"
+        )
+
+    # Reconstruct path from start to end using next_node matrix
+    path = [start]
+    current = start
+    while current != end:
+        ci = index[current]
+        next_id = next_node[ci][end_idx]
+        if next_id is None or next_id == current:
+            break
+        path.append(next_id)
+        current = next_id
+
+    if path[-1] != end:
+        return AlgorithmResult(
+            algorithm_name="Floyd-Warshall",
+            path=[], path_names=[], total_distance=0,
+            steps=steps, execution_time_ms=execution_time,
+            nodes_visited=nodes_visited, edges_relaxed=edges_relaxed,
+            success=False, error_message="No path found"
+        )
+
+    path_names = [BUILDINGS[nid].name for nid in path]
+
+    steps.append({
+        "step": step_count + 1,
+        "action": "found",
+        "current": end,
+        "distances": _row_as_dict(start_idx),
+        "visited": path,
+        "queue": [],
+        "message": (
+            f"Path found from {BUILDINGS[start].name} to {BUILDINGS[end].name} "
+            "using Floyd-Warshall."
+        ),
+    })
+
+    return AlgorithmResult(
+        algorithm_name="Floyd-Warshall",
+        path=path,
+        path_names=path_names,
+        total_distance=dist[start_idx][end_idx],
+        steps=steps,
+        execution_time_ms=execution_time,
+        nodes_visited=nodes_visited,
+        edges_relaxed=edges_relaxed,
+        success=True,
+    )
+
+
 def run_all_algorithms(start: str, end: str, custom_adj=None) -> Dict[str, AlgorithmResult]:
-    """Run all three algorithms and return comparative results."""
+    """Run both Dijkstra and Floyd-Warshall and return comparative results."""
     return {
         "dijkstra": dijkstra(start, end, custom_adj=custom_adj),
-        "astar": a_star(start, end, custom_adj=custom_adj),
-        "bellmanFord": bellman_ford(start, end, custom_adj=custom_adj),
+        "floydWarshall": floyd_warshall(start, end, custom_adj=custom_adj),
     }
 
 
@@ -705,47 +887,29 @@ ALGORITHM_INFO = {
         "pros": [
             "Guaranteed optimal solution",
             "Efficient for sparse graphs",
-            "Well-understood and widely used"
+            "Well-understood and widely used",
         ],
         "cons": [
             "Cannot handle negative weights",
             "No goal-directed optimization",
-            "May explore unnecessary nodes"
+            "May explore unnecessary nodes",
         ],
-        "bestFor": "General shortest path problems with non-negative weights"
+        "bestFor": "Single-source shortest path problems with non-negative weights",
     },
-    "astar": {
-        "name": "A* Algorithm",
-        "description": "Heuristic-guided search that uses estimated distance to goal to prioritize exploration.",
-        "timeComplexity": "O((V + E) log V)",
-        "spaceComplexity": "O(V)",
+    "floydWarshall": {
+        "name": "Floyd-Warshall Algorithm",
+        "description": "Dynamic programming algorithm that computes shortest paths between all pairs of buildings.",
+        "timeComplexity": "O(V³)",
+        "spaceComplexity": "O(V²)",
         "pros": [
-            "Often faster than Dijkstra in practice",
-            "Goal-directed (focuses on destination)",
-            "Optimal with admissible heuristic"
+            "Computes all-pairs shortest paths in one run",
+            "Simple, elegant dynamic programming formulation",
+            "Great for dense graphs or when many queries are needed",
         ],
         "cons": [
-            "Requires a good heuristic function",
-            "Memory intensive for large graphs",
-            "Heuristic quality affects performance"
+            "Much slower than Dijkstra on large sparse graphs",
+            "Uses more memory due to distance matrix",
         ],
-        "bestFor": "Point-to-point pathfinding on spatial graphs"
+        "bestFor": "Comparing many routes on the same graph using all-pairs shortest paths",
     },
-    "bellmanFord": {
-        "name": "Bellman-Ford Algorithm",
-        "description": "Dynamic programming approach that relaxes all edges V-1 times to find shortest paths.",
-        "timeComplexity": "O(V × E)",
-        "spaceComplexity": "O(V)",
-        "pros": [
-            "Can handle negative edge weights",
-            "Detects negative cycles",
-            "Simpler to implement"
-        ],
-        "cons": [
-            "Slower than Dijkstra for positive weights",
-            "Less efficient for large graphs",
-            "No early termination guarantee"
-        ],
-        "bestFor": "Graphs with negative weights or when cycle detection is needed"
-    }
 }

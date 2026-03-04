@@ -229,7 +229,7 @@ export default function Home() {
               animate={{ x: 0 }}
               exit={{ x: -350 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute left-2 md:left-4 top-2 md:top-4 bottom-2 md:bottom-4 w-72 md:w-80 max-w-[calc(100vw-2rem)] pointer-events-none z-20"
+              className="absolute inset-x-2 md:inset-x-auto md:left-4 top-2 md:top-4 bottom-2 md:bottom-4 w-auto md:w-80 max-w-full md:max-w-none pointer-events-none z-20"
             >
               <div className="h-full overflow-y-auto pointer-events-auto space-y-2 md:space-y-3 pb-4 scrollbar-thin">
                 {/* Algorithm Selection */}
@@ -332,11 +332,7 @@ export default function Home() {
           onClick={() => setIsPanelCollapsed(!isPanelCollapsed)}
           className="absolute top-1/2 -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm p-2 md:p-3 rounded-lg shadow-lg hover:bg-white transition-all hover:scale-105 border border-gray-200"
           title={isPanelCollapsed ? 'Show Controls' : 'Hide Controls'}
-          style={{
-            left: isPanelCollapsed
-              ? 'clamp(0.5rem, 2vw, 1rem)'
-              : 'clamp(18rem, calc(18rem + 2vw), 21.5rem)'
-          }}
+          style={{ left: '1rem' }}
         >
           {isPanelCollapsed ? '›' : '‹'}
         </button>
@@ -349,7 +345,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 100 }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute right-4 top-4 w-[450px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden z-20"
+              className="absolute inset-x-2 md:inset-x-auto md:right-4 top-2 md:top-4 w-auto md:w-[450px] max-w-full md:max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden z-20"
             >
               <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-300">
                 <div className="bg-gray-900 text-white px-5 py-4 flex items-center justify-between border-b border-gray-700">

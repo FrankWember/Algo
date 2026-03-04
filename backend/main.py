@@ -20,7 +20,7 @@ from typing import List, Optional, Dict, Any
 
 from campus_data import get_graph_data, BUILDINGS, BUILDING_CATEGORIES, get_adjacency_list, EDGES
 from algorithms import (
-    dijkstra, a_star, bellman_ford, run_all_algorithms,
+    dijkstra, floyd_warshall, run_all_algorithms,
     ALGORITHM_INFO, AlgorithmResult
 )
 
@@ -33,7 +33,12 @@ app = FastAPI(
 # CORS configuration for Next.js frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001", "http://127.0.0.1:3001"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -186,8 +191,7 @@ class PathResponse(BaseModel):
 
 class ComparisonResponse(BaseModel):
     dijkstra: PathResponse
-    astar: PathResponse
-    bellmanFord: PathResponse
+    floydWarshall: PathResponse
     winner: str
     summary: Dict[str, Any]
 
@@ -355,14 +359,12 @@ async def find_path(request: PathRequest):
 
     if algorithm == "dijkstra":
         result = dijkstra(request.start, request.end, custom_adj=custom_adj)
-    elif algorithm == "astar":
-        result = a_star(request.start, request.end, custom_adj=custom_adj)
-    elif algorithm == "bellmanFord":
-        result = bellman_ford(request.start, request.end, custom_adj=custom_adj)
+    elif algorithm == "floydWarshall":
+        result = floyd_warshall(request.start, request.end, custom_adj=custom_adj)
     else:
         raise HTTPException(
             status_code=400,
-            detail=f"Unknown algorithm: {algorithm}. Use 'dijkstra', 'astar', or 'bellmanFord'"
+            detail=f"Unknown algorithm: {algorithm}. Use 'dijkstra' or 'floydWarshall'",
         )
 
     return result_to_response(result, crowd_mult, prefs_applied)
@@ -384,85 +386,81 @@ async def compare_algorithms(request: PathRequest):
     results = run_all_algorithms(request.start, request.end, custom_adj=custom_adj)
 
     dijkstra_resp = result_to_response(results["dijkstra"], crowd_mult, prefs_applied)
-    astar_resp = result_to_response(results["astar"], crowd_mult, prefs_applied)
-    bellman_resp = result_to_response(results["bellmanFord"], crowd_mult, prefs_applied)
+    floyd_resp = result_to_response(results["floydWarshall"], crowd_mult, prefs_applied)
 
     valid_results = []
     if dijkstra_resp.success:
         valid_results.append(("dijkstra", dijkstra_resp))
-    if astar_resp.success:
-        valid_results.append(("astar", astar_resp))
-    if bellman_resp.success:
-        valid_results.append(("bellmanFord", bellman_resp))
+    if floyd_resp.success:
+        valid_results.append(("floydWarshall", floyd_resp))
 
     winner = min(valid_results, key=lambda x: x[1].nodesVisited)[0] if valid_results else "none"
 
     summary = {
         "allPathsEqual": (
-            dijkstra_resp.totalDistance == astar_resp.totalDistance == bellman_resp.totalDistance
-            if all(r.success for r in [dijkstra_resp, astar_resp, bellman_resp])
+            dijkstra_resp.totalDistance == floyd_resp.totalDistance
+            if all(r.success for r in [dijkstra_resp, floyd_resp])
             else False
         ),
         "fastestExecution": min(
-            [("dijkstra", dijkstra_resp.executionTimeMs),
-             ("astar", astar_resp.executionTimeMs),
-             ("bellmanFord", bellman_resp.executionTimeMs)],
-            key=lambda x: x[1]
-        )[0] if valid_results else "none",
+            [
+                ("dijkstra", dijkstra_resp.executionTimeMs),
+                ("floydWarshall", floyd_resp.executionTimeMs),
+            ],
+            key=lambda x: x[1],
+        )[0]
+        if valid_results
+        else "none",
         "fewestNodesVisited": min(
-            [("dijkstra", dijkstra_resp.nodesVisited),
-             ("astar", astar_resp.nodesVisited),
-             ("bellmanFord", bellman_resp.nodesVisited)],
-            key=lambda x: x[1]
-        )[0] if valid_results else "none",
-        "analysis": generate_analysis(dijkstra_resp, astar_resp, bellman_resp),
+            [
+                ("dijkstra", dijkstra_resp.nodesVisited),
+                ("floydWarshall", floyd_resp.nodesVisited),
+            ],
+            key=lambda x: x[1],
+        )[0]
+        if valid_results
+        else "none",
+        "analysis": generate_analysis(dijkstra_resp, floyd_resp),
         "crowdMultiplier": crowd_mult,
         "preferencesApplied": prefs_applied,
     }
 
     return ComparisonResponse(
         dijkstra=dijkstra_resp,
-        astar=astar_resp,
-        bellmanFord=bellman_resp,
+        floydWarshall=floyd_resp,
         winner=winner,
-        summary=summary
+        summary=summary,
     )
 
 
-def generate_analysis(dijkstra: PathResponse, astar: PathResponse, bellman: PathResponse) -> str:
-    if not all([dijkstra.success, astar.success, bellman.success]):
-        return "Some algorithms failed to find a path."
+def generate_analysis(dijkstra: PathResponse, floyd: PathResponse) -> str:
+    if not all([dijkstra.success, floyd.success]):
+        return "One or more algorithms failed to find a path."
 
     analysis_parts = []
 
-    if dijkstra.totalDistance == astar.totalDistance == bellman.totalDistance:
-        analysis_parts.append(f"All algorithms found the optimal path of {dijkstra.totalDistance}m.")
+    if dijkstra.totalDistance == floyd.totalDistance:
+        analysis_parts.append(
+            f"Both algorithms found the same optimal path of {dijkstra.totalDistance}m."
+        )
     else:
         analysis_parts.append(
-            f"Path distances vary: Dijkstra={dijkstra.totalDistance}m, "
-            f"A*={astar.totalDistance}m, Bellman-Ford={bellman.totalDistance}m."
+            "Path distances differ slightly between Dijkstra and Floyd-Warshall, "
+            "which may indicate numerical or modelling differences."
         )
 
-    if astar.nodesVisited < dijkstra.nodesVisited:
-        savings = ((dijkstra.nodesVisited - astar.nodesVisited) / dijkstra.nodesVisited) * 100
+    if dijkstra.nodesVisited != floyd.nodesVisited:
         analysis_parts.append(
-            f"A* visited {savings:.0f}% fewer nodes than Dijkstra due to its heuristic guidance."
+            f"Dijkstra visited {dijkstra.nodesVisited} nodes, while Floyd-Warshall "
+            f"considered {floyd.nodesVisited} nodes as part of its all-pairs computation."
         )
-    elif astar.nodesVisited == dijkstra.nodesVisited:
-        analysis_parts.append("A* and Dijkstra visited the same number of nodes for this path.")
-
-    analysis_parts.append(
-        f"Bellman-Ford relaxed {bellman.edgesRelaxed} edges across its iterations, "
-        f"which is typical for its O(V×E) approach."
-    )
 
     times = [
         ("Dijkstra", dijkstra.executionTimeMs),
-        ("A*", astar.executionTimeMs),
-        ("Bellman-Ford", bellman.executionTimeMs)
+        ("Floyd-Warshall", floyd.executionTimeMs),
     ]
     fastest = min(times, key=lambda x: x[1])
-    analysis_parts.append(f"{fastest[0]} was the fastest at {fastest[1]:.3f}ms.")
+    analysis_parts.append(f"{fastest[0]} was the faster algorithm at {fastest[1]:.3f}ms.")
 
     return " ".join(analysis_parts)
 
@@ -471,10 +469,8 @@ def generate_analysis(dijkstra: PathResponse, astar: PathResponse, bellman: Path
 async def get_algorithm_steps(algorithm: str, start: str, end: str):
     if algorithm == "dijkstra":
         result = dijkstra(start, end)
-    elif algorithm == "astar":
-        result = a_star(start, end)
-    elif algorithm == "bellmanFord":
-        result = bellman_ford(start, end)
+    elif algorithm == "floydWarshall":
+        result = floyd_warshall(start, end)
     else:
         raise HTTPException(status_code=400, detail=f"Unknown algorithm: {algorithm}")
 

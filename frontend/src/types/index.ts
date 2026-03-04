@@ -70,8 +70,7 @@ export interface PathResponse {
 
 export interface ComparisonResponse {
   dijkstra: PathResponse;
-  astar: PathResponse;
-  bellmanFord: PathResponse;
+  floydWarshall: PathResponse;
   winner: string;
   summary: {
     allPathsEqual: boolean;
@@ -93,7 +92,7 @@ export interface AlgorithmInfo {
   bestFor: string;
 }
 
-export type AlgorithmType = 'dijkstra' | 'astar' | 'bellmanFord';
+export type AlgorithmType = 'dijkstra' | 'floydWarshall';
 
 // ── Routing Preferences ──────────────────────────────────────────────────────
 

@@ -19,18 +19,10 @@ const ALGORITHMS = [
     icon: '🎯',
   },
   {
-    id: 'astar' as const,
-    name: 'A* Search',
-    description: 'Heuristic-guided pathfinding',
-    complexity: 'O((V+E) log V)',
-    color: 'bg-green-500',
-    icon: '⭐',
-  },
-  {
-    id: 'bellmanFord' as const,
-    name: 'Bellman-Ford',
-    description: 'Dynamic programming approach',
-    complexity: 'O(V × E)',
+    id: 'floydWarshall' as const,
+    name: 'Floyd-Warshall',
+    description: 'All-pairs dynamic programming',
+    complexity: 'O(V³)',
     color: 'bg-purple-500',
     icon: '🔄',
   },
@@ -69,10 +61,10 @@ export default function AlgorithmSelector({
             <div className="flex items-start gap-2">
               <span className="text-xl">{algo.icon}</span>
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-gray-900 text-sm truncate">
+                <div className="font-medium text-gray-900 text-sm leading-snug">
                   {algo.name}
                 </div>
-                <div className="text-xs text-gray-500 truncate">
+                <div className="text-xs text-gray-500 leading-snug">
                   {algo.description}
                 </div>
                 <div className="mt-1">

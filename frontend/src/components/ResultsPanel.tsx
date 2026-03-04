@@ -278,8 +278,7 @@ function ComparisonView({
 }: { comparison: ComparisonResponse; accessibilityData: Record<string, AccessibilityInfo>; preferences?: RoutePreferences }) {
   const algorithms = [
     { key: 'dijkstra', data: comparison.dijkstra, name: "Dijkstra's Algorithm" },
-    { key: 'astar', data: comparison.astar, name: 'A* Search' },
-    { key: 'bellmanFord', data: comparison.bellmanFord, name: 'Bellman-Ford' },
+    { key: 'floydWarshall', data: comparison.floydWarshall, name: 'Floyd-Warshall' },
   ];
 
   const maxTime = Math.max(...algorithms.map(a => a.data.executionTimeMs));
@@ -317,7 +316,7 @@ function ComparisonView({
           {comparison.dijkstra.totalDistance.toFixed(1)} m
         </div>
         {comparison.summary.allPathsEqual && (
-          <p className="text-xs text-gray-600">All algorithms found the same optimal path</p>
+          <p className="text-xs text-gray-600">Both algorithms found the same optimal path</p>
         )}
       </div>
 
