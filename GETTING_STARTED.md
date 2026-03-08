@@ -6,7 +6,7 @@ Welcome! This guide will help you understand the campus routing project step by 
 
 This project finds the **shortest path between two buildings on campus**, just like Google Maps but specifically for SIUE campus!
 
-**The cool part:** We compare 3 different algorithms to see which one is fastest!
+**The cool part:** We compare 2 different algorithms (Dijkstra and Floyd-Warshall) to see which one is fastest!
 
 ---
 
@@ -16,7 +16,7 @@ This project finds the **shortest path between two buildings on campus**, just l
 Project Algorithm/
 │
 ├── 📁 backend/                    ← THE SIMPLE VERSION (Start here!)
-│   ├── algorithms.py              ← ⭐ THREE PATHFINDING ALGORITHMS
+│   ├── algorithms.py              ← ⭐ TWO PATHFINDING ALGORITHMS (Dijkstra, Floyd-Warshall)
 │   ├── campus_data.py             ← Campus map (buildings & paths)
 │   └── main.py                    ← Web server (connects to frontend)
 │
@@ -35,34 +35,25 @@ Project Algorithm/
 
 ---
 
-## 🎯 THE THREE ALGORITHMS (Explained Simply)
+## 🎯 THE TWO ALGORITHMS (Explained Simply)
 
 ### 1. **Dijkstra's Algorithm** 🌊
 - **How it works:** Like water spreading from a source
 - **Strategy:** Always visit the closest unvisited building next
-- **Pros:** Guaranteed to find shortest path
-- **Cons:** Explores a lot of buildings
-- **Speed:** Medium
+- **Pros:** Guaranteed to find shortest path; efficient for single start→end query
+- **Cons:** Explores many buildings for one query
+- **Speed:** Fast for one route
 
 **Real-world analogy:** A flood spreading outward - water reaches nearest places first.
 
-### 2. **A* Algorithm** 🧭
-- **How it works:** Like Dijkstra but "smarter"
-- **Strategy:** Uses straight-line distance to guide search toward goal
-- **Pros:** Much faster than Dijkstra
-- **Cons:** Needs to know coordinates
-- **Speed:** Fast
+### 2. **Floyd-Warshall Algorithm** 🔄
+- **How it works:** Computes shortest distance between every pair of buildings in one go
+- **Strategy:** Dynamic programming: for each building k, try using k as a “middle” stop to shorten paths
+- **Pros:** One run gives all-pairs shortest paths; same path quality as Dijkstra
+- **Cons:** Slower than Dijkstra for a single query (O(V³))
+- **Speed:** Better when you need many routes on the same graph
 
-**Real-world analogy:** A GPS that knows where you're going and avoids searching in wrong directions.
-
-### 3. **Bellman-Ford Algorithm** 🔄
-- **How it works:** Checks all paths multiple times
-- **Strategy:** Relax all edges V-1 times
-- **Pros:** Can handle negative weights, simple concept
-- **Cons:** Slowest of the three
-- **Speed:** Slow
-
-**Real-world analogy:** Being extra careful - checking every possible route multiple times to be sure.
+**Real-world analogy:** Precomputing a full distance table between every two locations, then looking up any route instantly.
 
 ---
 
@@ -88,7 +79,7 @@ This will:
 - Load the campus map
 - Run example routes
 - Show you the results
-- Compare the three algorithms
+- Compare the two algorithms (Dijkstra vs Floyd-Warshall)
 
 ### Step 3: Try the Interactive CLI
 ```bash
@@ -207,8 +198,7 @@ python main.py cli
 
 ### Algorithm Explanations
 - **Dijkstra's Algorithm:** https://www.youtube.com/watch?v=pVfj6mxhdMw
-- **A* Algorithm:** https://www.youtube.com/watch?v=ySN5Wnu88nE
-- **Bellman-Ford:** https://www.youtube.com/watch?v=obWXjtg0L64
+- **Floyd-Warshall:** https://www.youtube.com/watch?v=4OQeCuLYj-4
 
 ### Python Data Structures
 - **heapq (Priority Queue):** https://docs.python.org/3/library/heapq.html

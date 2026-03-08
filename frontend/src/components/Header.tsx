@@ -62,13 +62,12 @@ export default function Header() {
               <strong>Smart Multi-Modal Campus Routing & Scheduling Optimizer</strong>
             </p>
             <p>
-              This project demonstrates three different shortest path algorithms
+              This project demonstrates two shortest path algorithms
               for finding optimal routes across the SIUE campus:
             </p>
             <ul className="list-disc list-inside space-y-1 ml-2">
-              <li><strong>Dijkstra's Algorithm</strong> - Classic greedy approach</li>
-              <li><strong>A* Search</strong> - Heuristic-guided optimization</li>
-              <li><strong>Bellman-Ford</strong> - Dynamic programming method</li>
+              <li><strong>Dijkstra's Algorithm</strong> - Single-source greedy approach</li>
+              <li><strong>Floyd-Warshall</strong> - All-pairs dynamic programming</li>
             </ul>
             <p>
               The campus is modeled as a weighted graph where buildings are nodes

@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'SIUE Campus Router - Algorithm Visualizer',
-  description: 'Compare pathfinding algorithms (Dijkstra, A*, Bellman-Ford) on the SIUE campus map',
+  description: 'Compare pathfinding algorithms (Dijkstra, Floyd-Warshall) on the SIUE campus map',
 };
 
 export default function RootLayout({

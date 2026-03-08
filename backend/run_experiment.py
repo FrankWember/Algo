@@ -1,5 +1,5 @@
 """
-Experiment script: Compare Dijkstra, A*, and Bellman-Ford on SIUE campus graph.
+Experiment script: Compare Dijkstra and Floyd-Warshall on SIUE campus graph.
 Outputs tables and CSV/JSON for Results and Discussion (tables and charts).
 Run from repo root: python backend/run_experiment.py
 Or from backend: python run_experiment.py
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     os.chdir(backend_dir)
 
 from campus_data import BUILDINGS
-from algorithms import dijkstra, a_star, bellman_ford, run_all_algorithms
+from algorithms import dijkstra, floyd_warshall, run_all_algorithms
 
 # Route pairs: (start_id, end_id, label) — mix of short, medium, long paths
 ROUTE_PAIRS: List[Tuple[str, str, str]] = [
@@ -46,14 +46,13 @@ def run_experiment() -> List[Dict[str, Any]]:
             print(f"Skip (missing node): {label}", file=sys.stderr)
             continue
         results = run_all_algorithms(start, end)
-        d, a, b = results["dijkstra"], results["astar"], results["bellmanFord"]
-        if not (d.success and a.success and b.success):
+        d, fw = results["dijkstra"], results["floydWarshall"]
+        if not (d.success and fw.success):
             print(f"Skip (no path): {label}", file=sys.stderr)
             continue
         # Optional: multiple runs for timing
         times_d = [dijkstra(start, end).execution_time_ms for _ in range(NUM_RUNS)]
-        times_a = [a_star(start, end).execution_time_ms for _ in range(NUM_RUNS)]
-        times_b = [bellman_ford(start, end).execution_time_ms for _ in range(NUM_RUNS)]
+        times_fw = [floyd_warshall(start, end).execution_time_ms for _ in range(NUM_RUNS)]
         row = {
             "route": label,
             "start": start,
@@ -61,14 +60,12 @@ def run_experiment() -> List[Dict[str, Any]]:
             "path_length_steps": len(d.path),
             "total_distance_m": round(d.total_distance, 1),
             "dijkstra_time_ms": sum(times_d) / NUM_RUNS,
-            "astar_time_ms": sum(times_a) / NUM_RUNS,
-            "bellman_time_ms": sum(times_b) / NUM_RUNS,
+            "floyd_warshall_time_ms": sum(times_fw) / NUM_RUNS,
             "dijkstra_nodes": d.nodes_visited,
-            "astar_nodes": a.nodes_visited,
-            "bellman_nodes": b.nodes_visited,
-            "bellman_edges_relaxed": b.edges_relaxed,
+            "floyd_warshall_nodes": fw.nodes_visited,
+            "floyd_warshall_edges_relaxed": fw.edges_relaxed,
             "dijkstra_edges": d.edges_relaxed,
-            "astar_edges": a.edges_relaxed,
+            "floyd_warshall_edges": fw.edges_relaxed,
         }
         rows.append(row)
     return rows
@@ -79,13 +76,13 @@ def print_tables(rows: List[Dict[str, Any]]) -> None:
     print("\n" + "=" * 100)
     print("TABLE 1: Per-route results (distance, execution time ms, nodes visited)")
     print("=" * 100)
-    print(f"{'Route':<45} {'Dist(m)':>8} {'Dijkstra':>12} {'A*':>12} {'Bellman-Ford':>14}  |  Nodes: D / A* / BF")
-    print("-" * 100)
+    print(f"{'Route':<45} {'Dist(m)':>8} {'Dijkstra':>12} {'Floyd-Warshall':>16}  |  Nodes: D / FW")
+    print("-" * 95)
     for r in rows:
         print(
             f"{r['route']:<45} {r['total_distance_m']:>8.1f} "
-            f"{r['dijkstra_time_ms']:>10.3f} {r['astar_time_ms']:>10.3f} {r['bellman_time_ms']:>12.3f}  |  "
-            f"{r['dijkstra_nodes']:>4} / {r['astar_nodes']:>4} / (edges: {r['bellman_edges_relaxed']})"
+            f"{r['dijkstra_time_ms']:>10.3f} {r['floyd_warshall_time_ms']:>14.3f}  |  "
+            f"{r['dijkstra_nodes']:>4} / {r['floyd_warshall_nodes']:>4}"
         )
     print()
 
@@ -94,17 +91,14 @@ def print_tables(rows: List[Dict[str, Any]]) -> None:
     print("=" * 100)
     n = len(rows)
     avg_d_time = sum(r["dijkstra_time_ms"] for r in rows) / n
-    avg_a_time = sum(r["astar_time_ms"] for r in rows) / n
-    avg_b_time = sum(r["bellman_time_ms"] for r in rows) / n
+    avg_fw_time = sum(r["floyd_warshall_time_ms"] for r in rows) / n
     avg_d_nodes = sum(r["dijkstra_nodes"] for r in rows) / n
-    avg_a_nodes = sum(r["astar_nodes"] for r in rows) / n
+    avg_fw_nodes = sum(r["floyd_warshall_nodes"] for r in rows) / n
     avg_d_edges = sum(r["dijkstra_edges"] for r in rows) / n
-    avg_a_edges = sum(r["astar_edges"] for r in rows) / n
-    avg_b_edges = sum(r["bellman_edges_relaxed"] for r in rows) / n
-    avg_b_nodes = sum(r["bellman_nodes"] for r in rows) / n
-    print(f"Mean execution time (ms):  Dijkstra = {avg_d_time:.4f},  A* = {avg_a_time:.4f},  Bellman-Ford = {avg_b_time:.4f}")
-    print(f"Mean nodes visited:        Dijkstra = {avg_d_nodes:.2f},  A* = {avg_a_nodes:.2f},  Bellman-Ford = {avg_b_nodes:.2f}  (BF: graph order |V|, same every route)")
-    print(f"Mean edges relaxed:        Dijkstra = {avg_d_edges:.2f},  A* = {avg_a_edges:.2f},  Bellman-Ford = {avg_b_edges:.2f}")
+    avg_fw_edges = sum(r["floyd_warshall_edges"] for r in rows) / n
+    print(f"Mean execution time (ms):  Dijkstra = {avg_d_time:.4f},  Floyd-Warshall = {avg_fw_time:.4f}")
+    print(f"Mean nodes visited:        Dijkstra = {avg_d_nodes:.2f},  Floyd-Warshall = {avg_fw_nodes:.2f}  (FW: |V|, all nodes in matrix)")
+    print(f"Mean edges relaxed:        Dijkstra = {avg_d_edges:.2f},  Floyd-Warshall = {avg_fw_edges:.2f}")
     print()
 
     print("=" * 100)
@@ -125,13 +119,12 @@ def write_csv_for_charts(rows: List[Dict[str, Any]], out_dir: str) -> None:
     path1 = os.path.join(out_dir, "execution_time_by_route.csv")
     with open(path1, "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["route", "Dijkstra_ms", "A*_ms", "BellmanFord_ms", "distance_m"])
+        w.writerow(["route", "Dijkstra_ms", "FloydWarshall_ms", "distance_m"])
         for r in rows:
             w.writerow([
                 r["route"],
                 round(r["dijkstra_time_ms"], 4),
-                round(r["astar_time_ms"], 4),
-                round(r["bellman_time_ms"], 4),
+                round(r["floyd_warshall_time_ms"], 4),
                 r["total_distance_m"],
             ])
     print(f"Wrote {path1}")
@@ -140,13 +133,13 @@ def write_csv_for_charts(rows: List[Dict[str, Any]], out_dir: str) -> None:
     path2 = os.path.join(out_dir, "nodes_visited_by_route.csv")
     with open(path2, "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["route", "Dijkstra_nodes", "A*_nodes", "BellmanFord_edges_relaxed", "path_segments", "distance_m"])
+        w.writerow(["route", "Dijkstra_nodes", "FloydWarshall_nodes", "FloydWarshall_edges_relaxed", "path_segments", "distance_m"])
         for r in rows:
             w.writerow([
                 r["route"],
                 r["dijkstra_nodes"],
-                r["astar_nodes"],
-                r["bellman_edges_relaxed"],
+                r["floyd_warshall_nodes"],
+                r["floyd_warshall_edges_relaxed"],
                 r["path_length_steps"],
                 r["total_distance_m"],
             ])
@@ -157,18 +150,15 @@ def write_csv_for_charts(rows: List[Dict[str, Any]], out_dir: str) -> None:
         "routes": [r["route"] for r in rows],
         "mean_execution_time_ms": {
             "Dijkstra": round(avg(rows, "dijkstra_time_ms"), 4),
-            "A*": round(avg(rows, "astar_time_ms"), 4),
-            "Bellman-Ford": round(avg(rows, "bellman_time_ms"), 4),
+            "Floyd-Warshall": round(avg(rows, "floyd_warshall_time_ms"), 4),
         },
         "mean_nodes_visited": {
             "Dijkstra": round(avg(rows, "dijkstra_nodes"), 2),
-            "A*": round(avg(rows, "astar_nodes"), 2),
-            "Bellman-Ford": round(avg(rows, "bellman_nodes"), 2),
+            "Floyd-Warshall": round(avg(rows, "floyd_warshall_nodes"), 2),
         },
         "mean_edges_relaxed": {
             "Dijkstra": round(avg(rows, "dijkstra_edges"), 2),
-            "A*": round(avg(rows, "astar_edges"), 2),
-            "Bellman-Ford": round(avg(rows, "bellman_edges_relaxed"), 2),
+            "Floyd-Warshall": round(avg(rows, "floyd_warshall_edges"), 2),
         },
         "per_route": rows,
     }
@@ -187,7 +177,7 @@ def main():
     base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     out_dir = os.path.join(base, "output")
 
-    print("Running experiment (Dijkstra, A*, Bellman-Ford) on SIUE campus graph...")
+    print("Running experiment (Dijkstra, Floyd-Warshall) on SIUE campus graph...")
     rows = run_experiment()
     if not rows:
         print("No results. Check BUILDINGS and ROUTE_PAIRS.")

@@ -7,7 +7,7 @@ A full-stack web application for visualizing and comparing shortest path algorit
 
 ## 🎯 Project Goal
 
-Create and compare 3 different algorithms to find the shortest path between buildings on the SIUE campus, with:
+Create and compare 2 different algorithms to find the shortest path between buildings on the SIUE campus, with:
 - Buildings as nodes
 - Walkways/paths as weighted edges (distance in meters)
 - Interactive visualization to understand how each algorithm works
@@ -18,19 +18,13 @@ Create and compare 3 different algorithms to find the shortest path between buil
 - **Type:** Greedy
 - **Time Complexity:** O((V + E) log V)
 - **Approach:** Always expands the nearest unvisited node
-- **Best for:** General shortest path with non-negative weights
+- **Best for:** Single-source shortest path with non-negative weights
 
-### 2. A* Search Algorithm
-- **Type:** Heuristic-guided
-- **Time Complexity:** O((V + E) log V) - often faster in practice
-- **Approach:** Uses Euclidean distance to guide search toward goal
-- **Best for:** Point-to-point pathfinding on spatial graphs
-
-### 3. Bellman-Ford Algorithm
+### 2. Floyd-Warshall Algorithm
 - **Type:** Dynamic Programming
-- **Time Complexity:** O(V × E)
-- **Approach:** Relaxes all edges V-1 times
-- **Best for:** Graphs with negative weights (demonstrates different approach)
+- **Time Complexity:** O(V³)
+- **Approach:** Computes shortest paths between all pairs of nodes via an intermediate-node relaxation loop
+- **Best for:** All-pairs shortest paths; useful for comparing many routes on the same graph
 
 ## 🗺️ Campus Graph
 
@@ -82,7 +76,7 @@ Frontend runs at: http://localhost:3000
 Project Algorithm/
 ├── backend/
 │   ├── main.py              # FastAPI server & endpoints
-│   ├── algorithms.py        # Dijkstra, A*, Bellman-Ford
+│   ├── algorithms.py        # Dijkstra, Floyd-Warshall
 │   ├── campus_data.py       # SIUE campus graph definition
 │   └── requirements.txt
 │
@@ -116,7 +110,7 @@ Project Algorithm/
 - Swap start and end with one click
 
 ### 2. Algorithm Comparison
-- Run single algorithm or compare all three
+- Run single algorithm or compare both (Dijkstra vs Floyd-Warshall)
 - See which algorithm is most efficient
 - View detailed metrics:
   - Total distance
@@ -144,7 +138,7 @@ Project Algorithm/
 | `/api/buildings` | GET | List all buildings |
 | `/api/algorithms` | GET | Algorithm information |
 | `/api/path` | POST | Find path with one algorithm |
-| `/api/compare` | POST | Compare all three algorithms |
+| `/api/compare` | POST | Compare Dijkstra and Floyd-Warshall |
 
 ### Example Request
 ```bash
@@ -153,7 +147,7 @@ curl -X POST http://localhost:8000/api/path \
   -d '{
     "start": "8",
     "end": "19",
-    "algorithm": "dijkstra"
+    "algorithm": "dijkstra"  // or "floydWarshall"
   }'
 ```
 
@@ -176,16 +170,16 @@ curl -X POST http://localhost:8000/api/path \
 
 For a typical route (MUC to Engineering Building):
 
-| Metric | Dijkstra | A* | Bellman-Ford |
-|--------|----------|-----|--------------|
-| Distance | 523.4m | 523.4m | 523.4m |
-| Nodes Visited | 15 | 8 | 50 |
-| Execution Time | 0.23ms | 0.18ms | 1.45ms |
+| Metric | Dijkstra | Floyd-Warshall |
+|--------|----------|----------------|
+| Distance | 523.4m | 523.4m |
+| Nodes Visited | 15 | V (all nodes in matrix) |
+| Execution Time | ~0.23ms | ~1–5ms (O(V³)) |
 
 **Key Insights:**
-- All algorithms find the same optimal path (correctness ✓)
-- A* visits fewer nodes due to heuristic guidance
-- Bellman-Ford is slowest due to O(V×E) complexity
+- Both algorithms find the same optimal path (correctness ✓)
+- Dijkstra is single-source and typically faster for one query
+- Floyd-Warshall computes all-pairs distances in one run; better when comparing many routes
 
 ## 🏫 Campus Buildings Included
 
